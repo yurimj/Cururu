@@ -1,5 +1,7 @@
 # Cururu
 
+[Português](README.md) | [English](README.en.md)
+
 Cliente de bancos de dados para Windows, desenvolvido com Tauri, TypeScript e
 Rust. Oferece editor SQL, árvore de objetos, grid de resultados e conexões com
 Oracle, SQL Server e MongoDB.
