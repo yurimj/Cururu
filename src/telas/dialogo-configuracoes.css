@@ -1,0 +1,239 @@
+/*
+  Tela de Configurações: lista de seções à esquerda, painel da seção à direita.
+
+  A tabela de atalhos veio de dialogo-atalhos.css, que deixou de existir quando
+  as Teclas de Atalho passaram a ser uma seção daqui em vez de uma tela própria.
+*/
+
+.dialogo-configuracoes {
+  width: 860px;
+  height: 560px;
+}
+
+/* --- Moldura: seções + painel ------------------------------------------- */
+
+.configuracoes__conteudo {
+  min-height: 0;
+  flex: 1;
+  display: flex;
+  background: var(--cor-fundo-painel);
+}
+
+.configuracoes__secoes {
+  width: 170px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 8px 0;
+  border-right: 1px solid var(--cor-borda);
+  background: var(--cor-fundo-barra);
+}
+
+.configuracoes__secoes button {
+  min-width: 0;
+  padding: 5px 14px;
+  border: none;
+  border-radius: 0;
+  background: none;
+  text-align: left;
+}
+
+.configuracoes__secoes button:hover:not(:disabled) {
+  border: none;
+  background: var(--cor-hover-suave);
+}
+
+.configuracoes__secoes button[aria-selected="true"] {
+  background: var(--cor-destaque-fraca);
+  font-weight: 600;
+}
+
+.configuracoes__corpo {
+  min-height: 0;
+  flex: 1;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 12px 14px;
+  background: var(--cor-fundo-painel);
+}
+
+/* Cada painel de seção empilha e ocupa a altura que sobra. */
+.configuracoes__corpo > section {
+  min-height: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* --- Seção Geral -------------------------------------------------------- */
+
+/* Duas colunas só: rótulo e campo. A `.grade` de estilo.css tem quatro, e as
+   duas sobrando esticariam as listas até a largura inteira do painel. */
+.configuracoes__geral {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 7px 8px;
+  align-content: start;
+}
+
+.configuracoes__geral select {
+  width: 220px;
+}
+
+.configuracoes__geral input[type="number"] {
+  width: 90px;
+}
+
+/* A explicação de um campo vai na linha de baixo, sob ele: a coluna do rótulo
+   é estreita, e o texto corrido cabe na do campo. */
+.configuracoes__geral-ajuda {
+  grid-column: 2;
+  margin: -3px 0 0;
+  color: var(--cor-texto-suave);
+  line-height: 1.45;
+  max-width: 68ch;
+}
+
+/* --- Seção Auto-Complete ------------------------------------------------ */
+
+/* O painel rola sozinho e as opções ficam no topo, sem esticar para preencher
+   a altura: um grupo só não pode ocupar a tela inteira. */
+.configuracoes__corpo > section[data-painel="auto-complete"] {
+  flex: 0 0 auto;
+  gap: 14px;
+}
+
+.configuracoes__grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 4px 14px 12px;
+}
+
+.configuracoes__grupo legend {
+  padding: 0 6px;
+  font-weight: 600;
+}
+
+.configuracoes__grupo-ajuda {
+  margin: 0;
+  color: var(--cor-texto-suave);
+}
+
+/* O radio no alto da primeira linha, e não centralizado na altura toda: com a
+   explicação embaixo do rótulo, o meio do bloco cai longe do que se clica. */
+.configuracoes__opcao {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: var(--raio);
+  cursor: pointer;
+}
+
+.configuracoes__opcao:hover {
+  background: var(--cor-hover-suave);
+}
+
+.configuracoes__opcao input[type="radio"] {
+  margin: 2px 0 0;
+}
+
+.configuracoes__opcao-texto {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.configuracoes__opcao-rotulo {
+  font-weight: 600;
+}
+
+.configuracoes__opcao-ajuda {
+  color: var(--cor-texto-suave);
+  /* Explicação é texto corrido: a entrelinha apertada da interface densa
+     dificulta justamente a linha que existe para ser lida com calma, e a
+     linha muito longa cansa a volta do olho ao começo da seguinte. A tela é
+     redimensionável, então o teto é em `ch` — ele acompanha a fonte, não a
+     largura da janela. */
+  line-height: 1.45;
+  max-width: 68ch;
+}
+
+.configuracoes__nota {
+  margin: 2px 8px 0;
+  padding-top: 8px;
+  border-top: 1px solid var(--cor-borda-suave);
+  color: var(--cor-texto-suave);
+  line-height: 1.45;
+  max-width: 78ch;
+}
+
+/* --- Seção Teclas de Atalho --------------------------------------------- */
+
+.configuracoes__ajuda {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.configuracoes__ajuda p {
+  flex: 1;
+  margin: 0;
+  color: var(--cor-texto-suave);
+}
+
+.atalhos__lista {
+  min-height: 0;
+  flex: 1;
+  overflow: auto;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+}
+
+.atalhos__tabela {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.atalhos__tabela th,
+.atalhos__tabela td {
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--cor-borda-suave);
+  text-align: left;
+}
+
+.atalhos__tabela th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--cor-fundo-barra);
+  color: var(--cor-texto-suave);
+  font-weight: 600;
+}
+
+.atalhos__tabela td:first-child,
+.atalhos__tabela td:nth-child(2) {
+  width: 190px;
+  white-space: nowrap;
+}
+
+.atalhos__entrada {
+  width: 170px;
+  padding: 4px 7px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 3px;
+  background: var(--cor-fundo-barra);
+  font: inherit;
+  font-weight: 600;
+}
+
+.atalhos__entrada:focus {
+  border-color: var(--cor-destaque);
+  outline: 1px solid var(--cor-destaque);
+}

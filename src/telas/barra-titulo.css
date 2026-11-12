@@ -1,0 +1,71 @@
+/* Barra de título própria, no lugar da nativa do Windows. */
+
+.barra-titulo {
+  display: flex;
+  align-items: stretch;
+  height: 32px;
+  flex-shrink: 0;
+  background: var(--cor-fundo-barra);
+  border-bottom: 1px solid var(--cor-borda);
+  user-select: none;
+}
+
+.barra-titulo__arraste {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding-left: 10px;
+}
+
+.barra-titulo__icone {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
+.barra-titulo__nome {
+  font-size: 12px;
+  color: var(--cor-texto-suave);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.barra-titulo__controles {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.barra-titulo__botao {
+  width: 44px;
+  height: 32px;
+  min-width: 0;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 0;
+  background: none;
+  color: var(--cor-texto-suave);
+}
+
+.barra-titulo__botao svg {
+  width: 10px;
+  height: 10px;
+}
+
+.barra-titulo__botao:hover {
+  background: var(--cor-hover-suave);
+  border: none;
+  color: var(--cor-texto);
+}
+
+/* O vermelho de fechar é convenção do próprio Windows — igual no claro e no
+   escuro, não é uma cor de tema do Cururu. */
+.barra-titulo__botao--fechar:hover {
+  background: #e81123;
+  color: #ffffff;
+}

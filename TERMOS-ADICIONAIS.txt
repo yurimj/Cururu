@@ -1,0 +1,36 @@
+Cururu - additional terms under GNU GPL version 3, section 7
+Copyright (c) 2026 yurimj (@yurijiacomo).
+
+The original Cururu material is licensed under the GNU General Public License,
+version 3 only, as reproduced in LICENSE, with the following additional terms.
+Third-party material remains subject to its respective license.
+
+1. Preservation of author attribution (section 7(b))
+
+For the original Cururu material, you must preserve the attribution identifying
+@yurijiacomo as the original author of Cururu in the Appropriate Legal Notices
+displayed by distributed interactive user interfaces containing that material.
+For a graphical interface, the About dialog or an equivalent readily accessible
+legal notices or credits view is an appropriate location. For example:
+
+    Cururu - originally created by @yurijiacomo.
+
+An accurate translation or equivalent wording is permitted. This requirement
+does not prescribe the layout of the interface, prevent adding other authors'
+credits, or imply that the original author endorses a modified version.
+
+2. Additional permission for Oracle Instant Client (section 7)
+
+If you modify this Program, or any covered work, by linking or combining it
+with Oracle Instant Client, the copyright holder of the original Cururu
+material grants you additional permission to convey the resulting work.
+You must comply with the GPL for the covered work and with Oracle's applicable
+license terms for Oracle Instant Client. Oracle Instant Client is not licensed
+under the GPL by this permission, and this permission does not grant rights
+to any Oracle software or require disclosure of its proprietary source code.
+
+This permission applies only to rights controlled by the copyright holder
+granting it. It does not override the licenses of other third-party material.
+You may extend this additional permission to your modifications, but you are
+not obligated to do so. The GPL's provisions governing removal of additional
+permissions continue to apply.

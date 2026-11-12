@@ -1,0 +1,80 @@
+/* Tela de Versões: o changelog do aplicativo. */
+
+/* Altura fixa: a lista cresce a cada versão, e a caixa não pode crescer junto
+   até encostar na borda da janela. Quem cresce é a rolagem do corpo. */
+.dialogo-versoes {
+  width: 620px;
+  height: 500px;
+}
+
+.versoes__corpo {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 2px 14px 14px;
+  background: var(--cor-fundo-painel);
+}
+
+.versoes__versao {
+  padding: 12px 0 6px;
+  border-top: 1px solid var(--cor-borda-suave);
+}
+
+.versoes__versao:first-child {
+  border-top: none;
+}
+
+.versoes__titulo {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0 0 6px;
+  font-size: 13px;
+  font-weight: normal;
+}
+
+.versoes__numero {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.versoes__data {
+  color: var(--cor-texto-suave);
+  font-size: 12px;
+}
+
+/* A versão em uso fica marcada à direita: é a resposta para "o que veio nesta
+   atualização que acabei de abrir?". */
+.versoes__atual {
+  margin-left: auto;
+  padding: 1px 8px;
+  border-radius: 9px;
+  background: var(--cor-destaque-fraca);
+  color: var(--cor-destaque);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.versoes__itens {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.versoes__itens li {
+  margin-bottom: 4px;
+  line-height: 1.45;
+}
+
+.versoes__itens code {
+  padding: 0 3px;
+  border-radius: 2px;
+  background: var(--cor-fundo-barra);
+  font-family: Consolas, "Cascadia Mono", monospace;
+  font-size: 12px;
+}
+
+.versoes__vazio {
+  margin: 0;
+  padding: 12px 0;
+  color: var(--cor-texto-suave);
+}

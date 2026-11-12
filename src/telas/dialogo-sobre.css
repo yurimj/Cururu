@@ -1,0 +1,53 @@
+/* Caixa "Sobre o Cururu". */
+
+.dialogo-sobre {
+  width: 360px;
+}
+
+/* Coluna centralizada, sobre o branco do painel: é a única tela do aplicativo
+   sem densidade de dados, então aqui o espaçamento largo cabe. */
+.sobre__corpo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  padding: 20px 16px 22px;
+  background: var(--cor-fundo-painel);
+  text-align: center;
+}
+
+.sobre__corpo p {
+  margin: 0;
+}
+
+.sobre__icone {
+  width: 76px;
+  height: 76px;
+  margin-bottom: 6px;
+}
+
+.sobre__nome {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.sobre__versao,
+.sobre__autor {
+  color: var(--cor-texto-suave);
+}
+
+.sobre__perfil {
+  color: var(--cor-destaque);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.sobre__perfil:hover {
+  text-decoration: underline;
+}
+
+.sobre__perfil:focus-visible {
+  outline: 1px solid var(--cor-destaque);
+  outline-offset: 2px;
+  border-radius: 2px;
+}

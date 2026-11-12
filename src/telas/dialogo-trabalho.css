@@ -1,0 +1,283 @@
+/*
+  Telas do SQL Server Agent (requisito 36): Novo Trabalho, Etapa e Agenda.
+
+  Uma folha só para as três porque elas são a mesma tela em três tamanhos — o
+  corpo rolável, a grade de rótulo + campo e a fileira de botões são idênticos, e
+  a etapa e a agenda nascem de dentro do trabalho.
+*/
+
+.dialogo-trabalho {
+  width: 760px;
+  height: 560px;
+}
+
+.dialogo-agenda {
+  width: 700px;
+}
+
+.dialogo-etapa {
+  width: 720px;
+  height: 560px;
+}
+
+.dialogo-iniciar-etapa {
+  width: 620px;
+  height: 420px;
+}
+
+/* Só esta tela tem o corpo inteiro ocupado pela grade. */
+.dialogo-iniciar-etapa .trabalho__corpo {
+  min-height: 0;
+}
+
+/* Lista de páginas à esquerda + painel à direita, como o SSMS organiza. */
+.trabalho__conteudo {
+  min-height: 0;
+  flex: 1;
+  display: flex;
+  background: var(--cor-fundo-painel);
+}
+
+.trabalho__paginas {
+  width: 150px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 8px 0;
+  border-right: 1px solid var(--cor-borda);
+  background: var(--cor-fundo-barra);
+}
+
+.trabalho__paginas button {
+  min-width: 0;
+  padding: 5px 14px;
+  border: none;
+  border-radius: 0;
+  background: none;
+  text-align: left;
+}
+
+.trabalho__paginas button:hover:not(:disabled) {
+  border: none;
+  background: var(--cor-hover-suave);
+}
+
+.trabalho__paginas button[aria-selected="true"] {
+  background: var(--cor-destaque-fraca);
+  font-weight: 600;
+}
+
+.trabalho__corpo {
+  min-height: 0;
+  flex: 1;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 14px;
+  background: var(--cor-fundo-painel);
+}
+
+/* Cada painel de página também empilha, e ocupa a altura que sobra. */
+.trabalho__corpo > section {
+  min-height: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.trabalho__corpo input[type="date"],
+.trabalho__corpo input[type="time"],
+.trabalho__corpo textarea {
+  font: inherit;
+  padding: 2px 5px;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  background: var(--cor-fundo-painel);
+  min-width: 0;
+}
+
+.trabalho__corpo textarea:focus {
+  outline: 1px solid var(--cor-destaque);
+  outline-offset: -1px;
+}
+
+.trabalho__descricao {
+  resize: vertical;
+  min-height: 58px;
+  max-height: 30vh;
+}
+
+.trabalho__rotulo-bloco {
+  margin-top: 2px;
+}
+
+/*
+  O comando é o editor de SQL inteiro — destaque de sintaxe, Tab que indenta,
+  localizar/substituir —, e não uma caixa de texto. A moldura fica aqui porque
+  o editor não desenha borda nenhuma; o tamanho vem do que sobra na janela, que
+  é o que faz o comando crescer junto quando ela é aumentada ou maximizada.
+*/
+.etapa__comando {
+  flex: 1;
+  min-height: 150px;
+  display: flex;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  background: var(--cor-fundo-painel);
+}
+
+/*
+  A lista do autocomplete sai do editor e passa por cima da moldura — com o
+  corpo rolando, ela seria cortada na borda. A tela da etapa não precisa de
+  rolagem: quem rola é o editor, e os campos ao redor têm tamanho fixo.
+*/
+.dialogo-etapa .trabalho__corpo {
+  overflow: visible;
+}
+
+/*
+  Isto é um aplicativo do Windows: arrastar o mouse sobre um rótulo, um
+  cabeçalho de grade ou um texto de aviso não pinta nada de azul. Só o que se
+  edita — campo de texto e o editor do comando — continua selecionável.
+*/
+.dialogo-trabalho,
+.dialogo-etapa,
+.dialogo-agenda,
+.dialogo-iniciar-etapa {
+  user-select: none;
+}
+
+.dialogo-trabalho input,
+.dialogo-trabalho textarea,
+.dialogo-etapa input,
+.dialogo-etapa textarea,
+.dialogo-etapa .editor-sql,
+.dialogo-agenda input,
+.dialogo-agenda textarea,
+.dialogo-iniciar-etapa input,
+.dialogo-iniciar-etapa textarea {
+  user-select: text;
+}
+
+/* Origem, criado em, última modificação e última execução: o servidor é quem
+   preenche, então nem sequer são campos. */
+.trabalho__somente-leitura output {
+  padding: 2px 0;
+  color: var(--cor-texto-suave);
+}
+
+.trabalho__nota {
+  margin: 0;
+  color: var(--cor-texto-suave);
+  font-size: 12px;
+}
+
+/* --- Grades de etapas e agendas ------------------------------------------ */
+
+.trabalho__lista {
+  min-height: 0;
+  flex: 1;
+  overflow: auto;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  background: var(--cor-fundo-painel);
+}
+
+.trabalho__grade {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.trabalho__grade th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: 4px 7px;
+  text-align: left;
+  font-weight: 600;
+  white-space: nowrap;
+  background: linear-gradient(var(--cor-cabecalho-de), var(--cor-cabecalho-ate));
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.trabalho__grade td {
+  padding: 3px 7px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  cursor: default;
+  user-select: none;
+}
+
+.trabalho__grade tbody tr:hover {
+  background: var(--cor-hover-suave);
+}
+
+.trabalho__grade tbody tr.trabalho__linha--selecionada,
+.trabalho__grade tbody tr.trabalho__linha--selecionada:hover {
+  background: var(--cor-destaque-fraca);
+}
+
+/* A coluna do número da etapa e a de sim/não não precisam de largura nenhuma. */
+.trabalho__ordem {
+  width: 78px;
+}
+
+.trabalho__vazio {
+  color: var(--cor-texto-suave);
+  font-style: italic;
+  text-align: center;
+}
+
+.trabalho__acoes {
+  display: flex;
+  gap: 6px;
+}
+
+/* As setas de mover ficam no fim da fileira, e são só o ícone. */
+.trabalho__acoes button[data-acao^="subir"],
+.trabalho__acoes button[data-acao^="descer"] {
+  min-width: 0;
+  width: 32px;
+  padding: 3px 0;
+}
+
+.trabalho__acoes button[data-acao^="subir"] {
+  margin-left: auto;
+}
+
+/* --- Agenda -------------------------------------------------------------- */
+
+.linha-campos {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.linha-campos input[type="number"] {
+  width: 68px;
+}
+
+.agenda__dias {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin-top: 8px;
+  padding-left: 2px;
+}
+
+.agenda__resumo > span {
+  display: block;
+  color: var(--cor-texto-suave);
+  font-size: 11px;
+}
+
+.agenda__resumo p {
+  margin: 2px 0 0;
+  min-height: 32px;
+}

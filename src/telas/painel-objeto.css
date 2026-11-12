@@ -1,0 +1,111 @@
+/* Visualizador de tabela: Dados, DDL e Estrutura. */
+
+.painel-objeto {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--cor-fundo-painel);
+}
+
+.painel-objeto__abas {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  padding: 4px 8px 0;
+  background: var(--cor-fundo-barra);
+  border-bottom: 1px solid var(--cor-borda);
+  flex-shrink: 0;
+}
+
+.painel-objeto__aba {
+  min-width: 88px;
+  padding: 5px 16px;
+  border-bottom: none;
+  border-radius: var(--raio) var(--raio) 0 0;
+  background: linear-gradient(var(--cor-tab-de), var(--cor-tab-ate));
+}
+
+.painel-objeto__aba--ativa,
+.painel-objeto__aba--ativa:hover {
+  position: relative;
+  top: 1px;
+  background: var(--cor-fundo-painel);
+  border-color: var(--cor-destaque) var(--cor-borda) var(--cor-fundo-painel);
+  box-shadow: inset 0 2px 0 var(--cor-destaque);
+  font-weight: 600;
+}
+
+.painel-objeto__paineis,
+.painel-objeto__painel,
+.painel-objeto__corpo {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.painel-objeto__painel[hidden] {
+  display: none;
+}
+
+.painel-objeto__barra {
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 8px;
+  background: var(--cor-fundo-barra);
+  border-bottom: 1px solid var(--cor-borda);
+  flex-shrink: 0;
+}
+
+.painel-objeto__barra .botao-discreto {
+  min-width: 0;
+  padding: 3px 10px;
+}
+
+.painel-objeto__barra label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.painel-objeto__barra input {
+  width: 72px;
+}
+
+.painel-objeto__espaco {
+  flex: 1;
+}
+
+.painel-objeto__corpo .editor-sql,
+.painel-objeto__corpo .grid {
+  flex: 1;
+}
+
+.painel-objeto__mensagem {
+  margin: 0;
+  padding: 10px 12px;
+  color: var(--cor-texto-suave);
+}
+
+.painel-objeto__mensagem--erro,
+.painel-objeto__rodape--erro {
+  color: var(--cor-erro);
+}
+
+.painel-objeto__rodape {
+  min-height: 26px;
+  display: flex;
+  align-items: center;
+  padding: 3px 8px;
+  background: var(--cor-fundo-barra);
+  border-top: 1px solid var(--cor-borda);
+  color: var(--cor-texto-suave);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-shrink: 0;
+}

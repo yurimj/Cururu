@@ -1,0 +1,137 @@
+/* Área de abas (requisito 11). */
+
+.area-abas {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.area-abas__barra {
+  /* Referência do `offsetLeft` das abas, que o arrasto mede (abas.ts). */
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  gap: 2px;
+  padding: 3px 4px 0;
+  background: var(--cor-fundo-barra);
+  border-bottom: 1px solid var(--cor-borda);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+}
+
+.aba {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 6px 3px 8px;
+  max-width: 220px;
+  background: linear-gradient(var(--cor-tab-de), var(--cor-tab-ate));
+  border: 1px solid var(--cor-borda);
+  border-bottom: none;
+  border-radius: var(--raio) var(--raio) 0 0;
+  cursor: default;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.aba:hover {
+  background: linear-gradient(var(--cor-cabecalho-de), var(--cor-cabecalho-ate));
+}
+
+.aba--ativa,
+.aba--ativa:hover {
+  background: var(--cor-fundo-painel);
+  font-weight: 600;
+}
+
+/* A aba arrastada segue o ponteiro por cima das vizinhas. A sombra fica nas
+   laterais: a barra corta o que passa da borda de baixo. */
+.aba--arrastando {
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.aba__cor {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border: 1px solid var(--cor-moldura-amostra);
+}
+
+.aba__titulo {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Anel que gira enquanto a aba executa; escondido quando parada, para não
+   deslocar o título das abas ociosas. Mesma cor de destaque do rodapé. */
+.aba__carregando {
+  display: none;
+  width: 11px;
+  height: 11px;
+  flex-shrink: 0;
+  border: 2px solid var(--cor-destaque-fraca);
+  border-top-color: var(--cor-destaque);
+  border-radius: 50%;
+  animation: aba-girar 0.7s linear infinite;
+}
+
+.aba--carregando .aba__carregando {
+  display: inline-block;
+}
+
+@keyframes aba-girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* A conexão vem menor e apagada, separada do título por um traço fino: o
+   título é o que se lê primeiro, mas a conexão nunca encurta — saber que a aba
+   é de produção importa mais do que ler o título inteiro. */
+.aba__conexao {
+  flex-shrink: 0;
+  padding-left: 6px;
+  border-left: 1px solid var(--cor-borda-suave);
+  font-size: 11px;
+  color: var(--cor-texto-suave);
+}
+
+.aba__fechar {
+  min-width: 0;
+  padding: 0 3px;
+  border: none;
+  background: none;
+  color: var(--cor-texto-suave);
+  font-size: 11px;
+  line-height: 1;
+  border-radius: 2px;
+}
+
+.aba__fechar:hover {
+  background: var(--cor-tab-fechar-hover);
+  border: none;
+  color: var(--cor-erro);
+}
+
+.area-abas__corpo {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  background: var(--cor-fundo-painel);
+}
+
+.area-abas__painel {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.area-abas__painel[hidden] {
+  display: none;
+}

@@ -1,0 +1,386 @@
+/* Aba de consulta SQL: barra, editor, resultado e painéis inferiores. */
+
+.painel-consulta {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Barra de ferramentas ----------------------------------------------- */
+
+.barra-consulta {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 4px 6px;
+  background: var(--cor-fundo-barra);
+  border-bottom: 1px solid var(--cor-borda);
+  flex-shrink: 0;
+}
+
+.botao-barra {
+  min-width: 0;
+  width: 26px;
+  height: 24px;
+  padding: 0;
+  font-size: 12px;
+  line-height: 1;
+}
+
+/* Commit com trabalho pendente: a cor de aviso, que já existe nos dois temas. */
+.botao-barra--pendente:not(:disabled) {
+  background: var(--cor-aviso-fundo);
+  color: var(--cor-aviso-texto);
+  border-color: var(--cor-aviso-texto);
+  font-weight: 700;
+}
+
+/* Lista de bancos, no lugar em que o Oracle mostra a Saída DBMS. */
+.banco-em-uso {
+  align-self: center;
+  max-width: 220px;
+  min-width: 90px;
+}
+
+.barra-consulta__separador {
+  width: 1px;
+  height: 18px;
+  margin: 0 4px;
+  background: var(--cor-borda);
+}
+
+.barra-consulta .caixa-marcacao {
+  margin-left: 2px;
+}
+
+.botoes-rapidos {
+  min-width: 0;
+  flex: 1 1 240px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  overflow: visible;
+}
+
+.botao-rapido {
+  flex: 0 1 auto;
+  min-width: 26px;
+  max-width: 78px;
+  height: 24px;
+  padding: 0 7px;
+  overflow: hidden;
+  font-size: 12px;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.botao-rapido--arrastando {
+  opacity: 0.4;
+}
+
+.botao-rapido--adicionar {
+  width: 26px;
+  padding: 0;
+  border-style: dashed;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--cor-destaque);
+}
+
+/* --- Editor e resultado -------------------------------------------------- */
+
+.painel-consulta .editor-sql {
+  flex: 1 1 45%;
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.area-resultado {
+  flex: 1 1 55%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--cor-fundo-painel);
+}
+
+/* Vários conjuntos de resultados no mesmo lote (requisito 6): um grid embaixo
+   do outro, como no SSMS. Cada grid tem altura própria — a virtualização
+   depende de a caixa ser menor que o conteúdo —, e é esta pilha que rola. */
+.pilha-de-grids {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 8px;
+}
+
+.pilha-de-grids > .grid {
+  flex: 0 0 auto;
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+/* Faixa entre um conjunto e o seguinte: separa os dois e arrasta a altura do
+   de cima. Ela ocupa o lugar do espaço que havia entre os grids — a separação
+   continua a mesma, agora com uma alça dentro. */
+.puxador-de-altura {
+  flex: 0 0 auto;
+  height: 9px;
+  cursor: ns-resize;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--cor-fundo-barra);
+}
+
+/* A alça: três pixels de altura que dizem que aquela faixa se pega. */
+.puxador-de-altura::after {
+  content: "";
+  width: 38px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--cor-borda);
+}
+
+.puxador-de-altura:hover::after,
+.puxador-de-altura--ativo::after {
+  background: var(--cor-texto-suave);
+}
+
+.puxador-de-altura:focus-visible {
+  outline: 1px solid var(--cor-texto);
+  outline-offset: -1px;
+}
+
+.saida-script {
+  flex: 1;
+  min-height: 0;
+  margin: 0;
+  padding: 6px 10px;
+  overflow: auto;
+  font-family: Consolas, "Cascadia Mono", monospace;
+  font-size: 12px;
+  line-height: 1.45;
+  white-space: pre;
+}
+
+/* --- Painéis inferiores (requisitos 8, 18 e 19) ------------------------- */
+
+.area-inferior {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--cor-borda);
+}
+
+.area-inferior__conteudo {
+  display: none;
+  height: 190px;
+  min-height: 0;
+  background: var(--cor-fundo-painel);
+}
+
+/* Minimizado por padrão: só abre quando uma aba é escolhida (requisito 8). */
+.area-inferior--aberta .area-inferior__conteudo {
+  display: flex;
+}
+
+.painel-inferior {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  font-family: Consolas, "Cascadia Mono", monospace;
+  font-size: 12px;
+}
+
+.painel-inferior[hidden] {
+  display: none;
+}
+
+.painel-inferior__barra {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  background: var(--cor-fundo-barra);
+  border-bottom: 1px solid var(--cor-borda-suave);
+  font-family: "Segoe UI", system-ui, sans-serif;
+  flex-shrink: 0;
+}
+
+.painel-inferior__texto {
+  flex: 1;
+  min-height: 0;
+  margin: 0;
+  padding: 6px 8px;
+  overflow: auto;
+  white-space: pre-wrap;
+}
+
+/*
+  Lista das mensagens. Rola sozinha para a barra do Limpar ficar parada no
+  topo — sem isto o botão subiria junto com as linhas e sumiria de vista
+  justamente quando há mensagem demais para ler.
+*/
+.painel-inferior__lista {
+  flex: 1;
+  min-height: 0;
+  padding: 4px 0;
+  overflow: auto;
+}
+
+.mensagem,
+.historico__item {
+  padding: 2px 8px;
+  white-space: pre-wrap;
+}
+
+.mensagem--erro {
+  color: var(--cor-erro);
+}
+
+.mensagem--clicavel {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.historico__item {
+  cursor: default;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.historico__item:hover {
+  background: var(--cor-destaque-fraca);
+}
+
+.area-inferior__faixa {
+  display: flex;
+  gap: 2px;
+  padding: 2px 4px;
+  background: var(--cor-fundo-barra);
+  border-top: 1px solid var(--cor-borda-suave);
+}
+
+.aba-inferior {
+  min-width: 0;
+  padding: 2px 12px;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--raio);
+}
+
+.aba-inferior:hover {
+  background: var(--cor-aba-inferior-hover);
+  border-color: var(--cor-borda-suave);
+}
+
+.aba-inferior--ativa {
+  background: var(--cor-fundo-painel);
+  border-color: var(--cor-borda);
+  font-weight: 600;
+}
+
+/* --- Rodapé (requisitos 10 e 17) ---------------------------------------- */
+
+.rodape-consulta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 3px 8px;
+  background: var(--cor-fundo-barra);
+  border-top: 1px solid var(--cor-borda);
+  flex-shrink: 0;
+}
+
+.rodape-consulta__informacao {
+  flex: 1;
+  min-width: 0;
+  color: var(--cor-texto-suave);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rodape-consulta__execucao {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--cor-destaque);
+  font-weight: 600;
+}
+
+.rodape-consulta__progresso {
+  width: 130px;
+  height: 10px;
+  accent-color: var(--cor-destaque);
+}
+
+.rodape-consulta label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.rodape-consulta input {
+  width: 72px;
+}
+
+/* --- Caixas auxiliares --------------------------------------------------- */
+
+.dialogo-binds {
+  width: 430px;
+}
+
+.dialogo-binds__corpo {
+  padding: 12px 14px 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 50vh;
+  overflow: auto;
+}
+
+.dialogo-binds__corpo label {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  align-items: center;
+  gap: 8px;
+}
+
+.dialogo-binds__corpo label span {
+  font-family: Consolas, "Cascadia Mono", monospace;
+  font-weight: 600;
+}
+
+.dialogo-binds__aviso {
+  margin: 4px 0 0;
+  color: var(--cor-texto-suave);
+}
+
+.visor-valor {
+  width: 720px;
+  height: 60vh;
+}
+
+.visor-valor__corpo {
+  flex: 1;
+  min-height: 0;
+  margin: 0;
+  padding: 10px 12px;
+  overflow: auto;
+  background: var(--cor-fundo-painel);
+  font-family: Consolas, "Cascadia Mono", monospace;
+  font-size: 12.5px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}

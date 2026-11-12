@@ -1,0 +1,125 @@
+/* Acompanhamento da execução de um trabalho do Agent (requisito 36). */
+
+.dialogo-execucao {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.dialogo-execucao .dialogo__rodape {
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.execucao__corpo {
+  flex: 1;
+  overflow: auto;
+  padding: 14px;
+  background: var(--cor-fundo-painel);
+}
+
+.execucao__linha {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.execucao__simbolo {
+  font-size: 15px;
+  line-height: 1.2;
+  color: var(--cor-destaque);
+}
+
+.execucao__simbolo--ok {
+  color: var(--cor-sucesso);
+}
+
+.execucao__simbolo--fim {
+  color: var(--cor-texto-suave);
+}
+
+.execucao__texto {
+  flex: 1;
+  min-width: 0;
+}
+
+.execucao__situacao {
+  margin: 0;
+  font-size: 14px;
+}
+
+.execucao__situacao--ok {
+  color: var(--cor-sucesso);
+}
+
+.execucao__situacao--erro {
+  color: var(--cor-erro);
+}
+
+.execucao__detalhe,
+.execucao__tempo {
+  margin: 2px 0 0;
+  color: var(--cor-texto-suave);
+  font-size: 12px;
+}
+
+.execucao__tempo {
+  margin-top: 8px;
+}
+
+/* A mensagem do histórico é texto do servidor, com quebra de linha dentro: ela
+   é mostrada como veio, e não reescrita. */
+.execucao__mensagem {
+  margin: 10px 0 0;
+  padding-top: 8px;
+  max-height: 120px;
+  overflow: auto;
+  border-top: 1px solid var(--cor-borda-suave);
+  font-size: 12px;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  user-select: text;
+}
+
+/* --- Andamento --------------------------------------------------------- */
+
+/* Barra indeterminada, e não de porcentagem: o Agent não informa progresso, e
+   uma barra que avançasse por conta própria inventaria um número que ninguém
+   mediu. Esta só diz "ainda está acontecendo". */
+.execucao__barra {
+  height: 6px;
+  margin-top: 12px;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  background: var(--cor-fundo-barra);
+  overflow: hidden;
+}
+
+.execucao__barra-pulso {
+  width: 35%;
+  height: 100%;
+  background: var(--cor-destaque);
+  animation: execucao-pulso 1.4s ease-in-out infinite;
+}
+
+@keyframes execucao-pulso {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(286%);
+  }
+}
+
+/* Quem desliga animação no Windows desliga esta também; a barra fica parada,
+   e o texto da situação continua dizendo o que está acontecendo. */
+@media (prefers-reduced-motion: reduce) {
+  .execucao__barra-pulso {
+    width: 100%;
+    animation: none;
+  }
+}

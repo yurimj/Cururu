@@ -1,0 +1,137 @@
+/* Editor de consultas SQL (requisitos 3, 22 e 23). */
+
+.editor-sql {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.editor-sql .cm-editor {
+  flex: 1;
+  min-height: 0;
+  font-family: Consolas, "Cascadia Mono", monospace;
+  font-size: var(--tamanho-fonte-editor);
+}
+
+.editor-sql .cm-scroller {
+  line-height: 1.5;
+}
+
+.editor-sql .cm-gutters {
+  background: var(--cor-fundo);
+  border-right: 1px solid var(--cor-borda-suave);
+  color: var(--cor-editor-gutter-texto);
+}
+
+.editor-sql .cm-activeLineGutter {
+  background: var(--cor-editor-linha-ativa-gutter);
+  color: var(--cor-texto);
+}
+
+.editor-sql .cm-activeLine {
+  background: var(--cor-editor-linha-ativa);
+}
+
+.editor-sql .cm-editor.cm-focused {
+  outline: none;
+}
+
+/*
+  Carregando os nomes que o Ctrl sublinha (requisito 22).
+
+  Uma linha fina no topo do editor, com um trecho mais forte que corre, na cor
+  de destaque — a mesma do anel da aba e da barra do rodapé —, e o cursor de
+  "trabalhando em segundo plano" sobre o texto. O nome já sublinhado continua
+  com a mãozinha: a regra da marca vale no próprio elemento.
+
+  Quem corre é o fundo, e não o elemento: um elemento deslocado para fora do
+  editor faria aparecer barra de rolagem no painel.
+*/
+.editor-sql .cm-editor.cm-navegacao-carregando::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 400;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, transparent, var(--cor-destaque), transparent) -43% 0 / 30% 100%
+      no-repeat,
+    var(--cor-destaque-fraca);
+  animation: navegacao-carregando 0.9s ease-in-out infinite;
+}
+
+.editor-sql .cm-editor.cm-navegacao-carregando .cm-content {
+  cursor: progress;
+}
+
+/* Com 30% de largura, -43% e 143% deixam o trecho inteiro fora das bordas. */
+@keyframes navegacao-carregando {
+  from {
+    background-position: -43% 0, 0 0;
+  }
+  to {
+    background-position: 143% 0, 0 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .editor-sql .cm-editor.cm-navegacao-carregando::after {
+    animation: none;
+    background: var(--cor-destaque);
+    opacity: 0.6;
+  }
+}
+
+/*
+  Cor da seleção.
+
+  O `!important` é proposital: o tema-base do CodeMirror pinta a seleção com um
+  lilás quase invisível usando seletores gerados em tempo de execução, cuja
+  especificidade não dá para prever com segurança daqui. Esta é a única forma
+  de garantir que a seleção apareça.
+*/
+.editor-sql .cm-selectionBackground,
+.editor-sql .cm-focused .cm-selectionBackground,
+.editor-sql .cm-line ::selection,
+.editor-sql .cm-content ::selection {
+  background: var(--cor-selecao-editor) !important;
+}
+
+/* Lista do autocomplete. */
+.editor-sql .cm-tooltip-autocomplete,
+.cm-tooltip-autocomplete {
+  border: 1px solid var(--cor-borda);
+  background: var(--cor-fundo-painel);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  font-family: Consolas, "Cascadia Mono", monospace;
+  /* A lista acompanha o zoom do texto: sugestão miúda sobre editor ampliado é
+     exatamente o que o zoom existe para evitar. */
+  font-size: var(--tamanho-fonte-editor);
+}
+
+.cm-tooltip-autocomplete > ul > li[aria-selected] {
+  background: var(--cor-destaque);
+  color: #ffffff;
+}
+
+.cm-completionDetail {
+  margin-left: 10px;
+  font-style: normal;
+  opacity: 0.7;
+}
+
+/* Painel de localizar/substituir. */
+.cm-panels {
+  border-color: var(--cor-borda);
+  background: var(--cor-fundo-barra);
+}
+
+.cm-panel.cm-search input,
+.cm-panel.cm-search button {
+  font-family: "Segoe UI", system-ui, sans-serif;
+  font-size: 12.5px;
+}

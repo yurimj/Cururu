@@ -1,0 +1,196 @@
+/* Janela de configuração dos botões de texto rápido. */
+
+.dialogo-botao-rapido {
+  width: 440px;
+}
+
+.dialogo-botao-rapido__corpo {
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dialogo-botao-rapido__corpo > label {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  align-items: center;
+  gap: 8px;
+}
+
+.dialogo-botao-rapido__corpo input,
+.dialogo-botao-rapido__corpo textarea {
+  width: 100%;
+  font: inherit;
+  padding: 3px 5px;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  background: var(--cor-fundo-painel);
+}
+
+.dialogo-botao-rapido__corpo input[type="number"] {
+  width: 90px;
+}
+
+.dialogo-botao-rapido__corpo textarea {
+  resize: vertical;
+  min-height: 96px;
+  max-height: 45vh;
+  font-family: Consolas, "Cascadia Mono", monospace;
+  white-space: pre;
+}
+
+.dialogo-botao-rapido__corpo textarea:focus {
+  outline: 1px solid var(--cor-destaque);
+  outline-offset: -1px;
+}
+
+.dialogo-botao-rapido__conteudo {
+  align-items: start !important;
+}
+
+.dialogo-botao-rapido__opcao span:last-child {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dialogo-botao-rapido__opcao input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+}
+
+.dialogo-botao-rapido__opcao:has(input:disabled) {
+  color: var(--cor-texto-suave);
+}
+
+/*
+  Filtro de conexões.
+
+  Mesma grade de 110px dos `label` vizinhos, para o rótulo "Conexão" nascer
+  alinhado com "Label", "Tecla de atalho" e "Posição"; não é um `label` porque
+  aqui dentro há várias marcações, e um rótulo só não aponta para nenhuma.
+*/
+.dialogo-botao-rapido__conexoes {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  align-items: start;
+  gap: 8px;
+}
+
+.dialogo-botao-rapido__conexoes > span {
+  padding-top: 5px;
+}
+
+.lista-de-marcacao {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  background: var(--cor-fundo-painel);
+  /* Quatro linhas e meia: a meia linha é o que mostra que a lista rola. */
+  max-height: 118px;
+  overflow-y: auto;
+}
+
+.lista-de-marcacao__item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 8px;
+  cursor: pointer;
+  /* A linha inteira é área de clique — mirar o quadradinho de 14px é pior. */
+  user-select: none;
+}
+
+.lista-de-marcacao__item:hover {
+  background: var(--cor-hover-suave);
+}
+
+.lista-de-marcacao__item--todas {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  border-bottom: 1px solid var(--cor-borda-suave);
+  background: var(--cor-fundo-painel);
+  font-weight: 600;
+}
+
+.lista-de-marcacao__item--todas:hover {
+  background: var(--cor-hover-suave);
+}
+
+.lista-de-marcacao__item span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* A bolinha de cor da conexão, a mesma do painel lateral. */
+.lista-de-marcacao__cor {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px var(--cor-moldura-amostra);
+}
+
+/*
+  Marcação desenhada à mão: o checkbox nativo do WebView2 ignora as cores do
+  tema e fica azul-Windows nos dois, claro e escuro.
+*/
+.lista-de-marcacao__item input[type="checkbox"] {
+  flex: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  background: var(--cor-fundo-painel);
+  cursor: pointer;
+  transition: background-color 120ms ease, border-color 120ms ease;
+}
+
+.lista-de-marcacao__item input[type="checkbox"]:hover {
+  border-color: var(--cor-destaque);
+}
+
+.lista-de-marcacao__item input[type="checkbox"]:checked {
+  border-color: var(--cor-destaque);
+  background: var(--cor-destaque);
+}
+
+/* O tique é desenhado com borda: dois lados de um quadrado, girado 45°. */
+.lista-de-marcacao__item input[type="checkbox"]:checked::after {
+  content: "";
+  display: block;
+  width: 3px;
+  height: 7px;
+  margin: 0 auto;
+  border: solid #ffffff;
+  border-width: 0 2px 2px 0;
+  transform: translateY(-1px) rotate(45deg);
+}
+
+.lista-de-marcacao__item input[type="checkbox"]:focus-visible {
+  outline: 2px solid var(--cor-destaque);
+  outline-offset: 1px;
+}
+
+.dialogo-botao-rapido__ajuda,
+.dialogo-botao-rapido__erro {
+  margin: -3px 0 0 118px;
+  font-size: 12px;
+}
+
+.dialogo-botao-rapido__ajuda {
+  color: var(--cor-texto-suave);
+}
+
+.dialogo-botao-rapido__erro {
+  min-height: 16px;
+  color: var(--cor-erro);
+}
+

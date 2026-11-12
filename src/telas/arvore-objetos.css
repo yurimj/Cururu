@@ -1,0 +1,135 @@
+/* Árvore de objetos (requisitos 2 e 4). */
+
+.arvore,
+.no__filhos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Cada nível recua um pouco; o recuo fica no filho, não na linha, para a
+   faixa de seleção continuar ocupando a largura toda do painel. */
+.no__filhos {
+  padding-left: 15px;
+}
+
+.no {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 6px 2px 2px;
+  white-space: nowrap;
+  cursor: default;
+  user-select: none;
+}
+
+.no:hover {
+  background: var(--cor-hover-suave);
+}
+
+.no--selecionado,
+.no--selecionado:hover {
+  background: var(--cor-destaque-fraca);
+}
+
+.no:focus-visible {
+  outline: 1px solid var(--cor-destaque);
+  outline-offset: -1px;
+}
+
+.no__alternador {
+  width: 12px;
+  flex-shrink: 0;
+  text-align: center;
+  font-size: 9px;
+  color: var(--cor-texto-suave);
+}
+
+.no__simbolo {
+  width: 14px;
+  flex-shrink: 0;
+  text-align: center;
+  color: var(--cor-destaque);
+}
+
+.no__rotulo {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.no__detalhe {
+  margin-left: 6px;
+  color: var(--cor-texto-suave);
+  font-size: 12px;
+  /* Num painel estreito é o comentário que encolhe, não o nome: saber qual é a
+     view importa mais do que ler a descrição inteira — que continua na dica.
+     O número é alto de propósito. O encolhimento do flexbox é proporcional ao
+     tamanho de cada item, então um fator pequeno ainda deixa sobrar déficit
+     para o nome: medido no painel de 280px, com fator 4 o nome de VW_EXATOS_50
+     já saía cortado com o comentário ainda ocupando 150px. A partir de 100 o
+     comentário absorve o déficit inteiro, e o nome só encolhe depois que ele
+     chega ao fim. */
+  flex-shrink: 100;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.no--conexao > .no__simbolo,
+.no--conexao {
+  font-weight: 600;
+}
+
+.no--categoria > .no__simbolo {
+  color: var(--cor-categoria-icone);
+}
+
+.no--coluna > .no__simbolo {
+  color: var(--cor-texto-suave);
+}
+
+.no--fonte > .no__simbolo {
+  color: var(--cor-fonte-icone);
+}
+
+/* Serviço parado — hoje, o SQL Server Agent fora do ar (requisito 36). O nó
+   continua expansível: os trabalhos existem, só não vão rodar. */
+.no--parado > .no__simbolo,
+.no--parado > .no__detalhe {
+  color: var(--cor-erro);
+}
+
+/* Trabalho desabilitado: existe, está agendado e mesmo assim não roda. */
+.no--desabilitado > .no__rotulo,
+.no--desabilitado > .no__simbolo {
+  color: var(--cor-texto-suave);
+}
+
+/* Objeto com compilação inválida, como o SQL Developer destaca. */
+.no--invalido > .no__rotulo {
+  color: var(--cor-erro);
+  text-decoration: underline wavy currentColor 1px;
+  text-underline-offset: 2px;
+}
+
+/* "Listar mais 100…" no fim de uma listagem paginada. */
+.no--listar-mais > .no__rotulo {
+  color: var(--cor-destaque);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.no--listar-mais > .no__simbolo {
+  color: var(--cor-destaque);
+}
+
+.no__aviso {
+  padding: 2px 6px 2px 20px;
+  color: var(--cor-texto-suave);
+  font-style: italic;
+}
+
+.no__aviso--erro {
+  color: var(--cor-erro);
+  font-style: normal;
+  white-space: normal;
+}

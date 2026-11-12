@@ -1,0 +1,41 @@
+.indicador-de-abertura {
+  position: fixed;
+  inset: auto 10px 30px auto;
+  z-index: 101;
+  pointer-events: none;
+}
+
+.indicador-de-abertura:not(:empty) {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: min(420px, calc(100vw - 20px));
+  padding: 8px 12px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 5px;
+  background: var(--cor-fundo-painel);
+  color: var(--cor-texto);
+  box-shadow: 0 2px 8px #0003;
+  overflow-wrap: anywhere;
+}
+
+.indicador-de-abertura:not(:empty)::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--cor-borda);
+  border-top-color: var(--cor-destaque);
+  border-radius: 50%;
+  animation: girar-indicador-de-abertura 750ms linear infinite;
+}
+
+@keyframes girar-indicador-de-abertura {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .indicador-de-abertura::before {
+    animation: none;
+  }
+}

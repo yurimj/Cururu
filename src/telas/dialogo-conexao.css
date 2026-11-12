@@ -1,0 +1,254 @@
+/*
+  Diálogo "Novo / Selecionar Conexão do Banco de Dados" (requisito 1).
+  Layout espelhando o do Oracle SQL Developer.
+*/
+
+/* A moldura do diálogo (fundo, barra, rodapé, status) mora em estilo.css,
+   porque é compartilhada com outras caixas. Aqui fica só o que é da tela de
+   conexões. */
+
+.dialogo-conexao {
+  width: 860px;
+}
+
+.dialogo__corpo {
+  flex: 1;
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  min-height: 0;
+}
+
+/* --- Lista de conexões salvas ------------------------------------------ */
+
+.lista-conexoes {
+  width: 232px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--cor-borda);
+  background: var(--cor-fundo-painel);
+  overflow: auto;
+}
+
+.lista-conexoes table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.lista-conexoes th {
+  position: sticky;
+  top: 0;
+  padding: 3px 6px;
+  text-align: left;
+  font-weight: 600;
+  background: linear-gradient(var(--cor-cabecalho-de), var(--cor-cabecalho-ate));
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.lista-conexoes td {
+  padding: 2px 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lista-conexoes tbody tr {
+  cursor: default;
+}
+
+.lista-conexoes tbody tr:hover {
+  background: var(--cor-hover-suave);
+}
+
+.lista-conexoes tbody tr[aria-selected="true"] {
+  background: var(--cor-destaque-fraca);
+}
+
+/* Faixa da cor de identificação da conexão. */
+.lista-conexoes .marca-cor {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 5px;
+  border: 1px solid var(--cor-moldura-amostra);
+  vertical-align: baseline;
+}
+
+.lista-conexoes__vazia {
+  padding: 10px;
+  color: var(--cor-texto-suave);
+}
+
+/* Atalho de cadastro, na linha seguinte à última conexão. */
+.lista-conexoes__celula-nova {
+  padding: 0;
+}
+
+.lista-conexoes__nova {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  padding: 2px 6px;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  text-align: left;
+  color: var(--cor-destaque);
+}
+
+/* O realce do hover é o da linha inteira, vindo do `tr`. */
+.lista-conexoes__nova:hover:not(:disabled) {
+  background: none;
+}
+
+.lista-conexoes__nova[aria-pressed="true"],
+.lista-conexoes__nova[aria-pressed="true"]:hover:not(:disabled) {
+  background: var(--cor-destaque-fraca);
+  font-weight: 600;
+}
+
+/* --- Formulário --------------------------------------------------------- */
+
+.formulario {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow: auto;
+}
+
+.linha {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.linha > label {
+  flex-shrink: 0;
+}
+
+.linha input[type="text"],
+.linha input[type="password"] {
+  flex: 1;
+}
+
+.campo-nome {
+  flex: 1;
+}
+
+.campo-com-acoes {
+  display: flex;
+  gap: 6px;
+}
+
+.campo-com-acoes input {
+  flex: 1;
+  min-width: 0;
+}
+
+.campo-com-acoes button {
+  flex-shrink: 0;
+}
+
+.seletor-cor {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.seletor-cor input[type="color"] {
+  width: 46px;
+  height: 22px;
+  padding: 0;
+  border: 1px solid var(--cor-borda);
+  background: var(--cor-fundo-painel);
+  cursor: pointer;
+}
+
+.linha-paleta {
+  min-height: 26px;
+  flex-wrap: wrap;
+}
+
+.linha-paleta > label {
+  font-size: 11px;
+  color: var(--cor-texto-suave);
+}
+
+.linha-paleta small {
+  color: var(--cor-texto-suave);
+  white-space: nowrap;
+}
+
+.paleta-cores {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.paleta-cores__opcao {
+  width: 22px;
+  height: 22px;
+  min-width: 0;
+  padding: 0;
+  /* A borda usa a cor de fundo do diálogo — não branco fixo — para virar um
+     anel que se mistura com o fundo em vez de aparecer como um contorno claro
+     por cima de um diálogo escuro. */
+  border: 2px solid var(--cor-fundo);
+  border-radius: 3px;
+  outline: 1px solid var(--cor-borda);
+  background: var(--amostra-cor);
+}
+
+.paleta-cores__opcao:hover {
+  border-color: rgba(255, 255, 255, 0.75);
+  outline-color: var(--cor-texto-suave);
+}
+
+.paleta-cores__opcao[aria-pressed="true"] {
+  border-color: #fff;
+  outline: 2px solid var(--cor-texto);
+}
+
+/* --- Abas --------------------------------------------------------------- */
+
+.abas {
+  display: flex;
+  gap: 2px;
+  margin-bottom: -1px;
+}
+
+.abas button {
+  min-width: 0;
+  padding: 4px 14px;
+  border: 1px solid var(--cor-borda);
+  border-bottom-color: transparent;
+  border-radius: var(--raio) var(--raio) 0 0;
+  background: linear-gradient(var(--cor-tab-de), var(--cor-tab-ate));
+}
+
+.abas button[aria-selected="true"] {
+  background: var(--cor-fundo);
+  font-weight: 600;
+  border-bottom-color: var(--cor-fundo);
+}
+
+.painel-aba {
+  border: 1px solid var(--cor-borda);
+  border-radius: 0 var(--raio) var(--raio) var(--raio);
+  padding: 10px 12px;
+  background: var(--cor-fundo);
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+/* Painel sem abas em cima — o do SQL Server, que não tem "Usuário Proxy" nem
+   "TNS" para alternar. Sem a aba, o canto superior esquerdo volta a ser redondo
+   como os outros três. */
+.painel-aba--solto {
+  border-radius: var(--raio);
+}

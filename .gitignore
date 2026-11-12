@@ -1,0 +1,30 @@
+# Dependências e artefatos de build
+node_modules/
+dist/
+src-tauri/target/
+# Saída alternativa do Cargo (CARGO_TARGET_DIR), mesma natureza de target/.
+src-tauri/target-codex-release/
+ferramentas/gerar-icone/target/
+
+# Oracle Instant Client embutido (baixado do site da Oracle, ~234 MB)
+# Não versionado: ver premissas.md, seção "Driver Oracle e Instant Client"
+runtime/
+
+# Diversos
+*.log
+.DS_Store
+
+# Dados locais, credenciais e material privado não pertencem aos fontes.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.pfx
+*.p12
+conexoes.json
+perfis.json
+alertas.json
+recuperacao/
+dados-privados/
+backups/

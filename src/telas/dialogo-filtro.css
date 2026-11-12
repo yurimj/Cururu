@@ -1,0 +1,204 @@
+/* Diálogo de filtro de objetos: dois grupos explícitos, inclusão e exclusão. */
+
+.dialogo-filtro {
+  width: 700px;
+}
+
+.filtro__corpo {
+  min-height: 0;
+  overflow: auto;
+  padding: 4px 18px 0;
+  background: var(--cor-fundo-painel);
+}
+
+.filtro__grupo {
+  padding: 15px 0;
+  border-top: 1px solid var(--cor-borda-suave);
+}
+
+.filtro__grupo:first-child {
+  border-top: none;
+}
+
+.filtro__grupo-cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.filtro__grupo-cabecalho h2 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.filtro__grupo-cabecalho p {
+  margin: 2px 0 0;
+  color: var(--cor-texto-suave);
+  font-size: 12px;
+}
+
+.filtro__acrescentar {
+  flex-shrink: 0;
+  min-width: 0;
+  padding-inline: 10px;
+}
+
+.filtro__colunas,
+.filtro__linha {
+  display: grid;
+  grid-template-columns: minmax(105px, 0.8fr) minmax(110px, 0.8fr) minmax(180px, 1.5fr) 30px;
+  align-items: center;
+  gap: 8px;
+}
+
+.filtro__colunas {
+  padding: 0 2px 3px;
+  color: var(--cor-texto-suave);
+  font-size: 11px;
+}
+
+.filtro__linha {
+  margin-top: 7px;
+}
+
+.filtro__linha:first-child {
+  margin-top: 0;
+}
+
+.filtro__linha select,
+.filtro__linha input[type="text"] {
+  width: 100%;
+  height: 27px;
+}
+
+.filtro__alvo {
+  min-width: 0;
+  height: 27px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 9px;
+  border: 1px solid var(--cor-borda-suave);
+  border-radius: 12px;
+  background: var(--cor-destaque-fraca);
+  font-weight: 600;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.filtro__alvo-simbolo {
+  color: var(--cor-destaque);
+  font-size: 15px;
+}
+
+.filtro__remover {
+  min-width: 0;
+  width: 30px;
+  height: 27px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border-color: transparent;
+  background: none;
+  color: var(--cor-texto-suave);
+}
+
+.filtro__remover svg {
+  width: 16px;
+  height: 16px;
+}
+
+.filtro__remover:hover:not(:disabled) {
+  color: var(--cor-erro);
+  border-color: var(--cor-borda-suave);
+  background: var(--cor-fundo-barra);
+}
+
+.filtro__juncao {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--cor-texto-suave);
+  font-family: Consolas, "Cascadia Mono", monospace;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.filtro__juncao::before,
+.filtro__juncao::after {
+  content: "";
+  height: 1px;
+  flex: 1;
+  background: var(--cor-borda-suave);
+}
+
+.filtro__juncao span {
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: var(--cor-fundo-barra);
+}
+
+.filtro__previa {
+  margin: 0 0 15px;
+}
+
+.filtro__previa > span {
+  display: block;
+  color: var(--cor-texto-suave);
+  font-size: 11px;
+}
+
+.filtro__previa code {
+  display: block;
+  min-height: 34px;
+  padding: 8px 0;
+  font-family: Consolas, "Cascadia Mono", monospace;
+  overflow-wrap: anywhere;
+}
+
+.filtro__opcoes {
+  display: flex;
+  gap: 20px;
+  padding: 0 18px 14px;
+  background: var(--cor-fundo-painel);
+}
+
+/* No SQL Server não há opção nenhuma para pôr aqui: `is_ms_shipped = 0` já
+   vale sempre. Sem isto, sobraria uma faixa vazia de 14px acima do rodapé. */
+.filtro__opcoes:empty {
+  display: none;
+}
+
+.filtro__rodape {
+  justify-content: flex-end;
+}
+
+.filtro__aplicar {
+  border-color: var(--cor-destaque);
+  background: var(--cor-destaque);
+  color: #fff;
+}
+
+.filtro__aplicar:hover:not(:disabled) {
+  border-color: var(--cor-destaque-forte);
+  background: var(--cor-destaque-forte);
+}
+
+@media (max-width: 620px) {
+  .filtro__colunas {
+    display: none;
+  }
+
+  .filtro__linha {
+    grid-template-columns: 1fr 1fr 30px;
+  }
+
+  .filtro__linha input[type="text"] {
+    grid-column: 1 / 3;
+    grid-row: 2;
+  }
+}

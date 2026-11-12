@@ -1,0 +1,132 @@
+/* Caixa de diálogo que se move, se redimensiona e maximiza. Ver janela.ts. */
+
+.janela {
+  /* As alças das bordas se posicionam por esta referência. */
+  position: relative;
+}
+
+/*
+  Depois do primeiro arrasto quem manda na posição é o `left`/`top`, e no
+  tamanho é o `width`/`height`. Os limites de `.dialogo` saem junto: eles são o
+  tamanho de partida, e encolheriam de volta a janela que o usuário acabou de
+  aumentar.
+*/
+.janela--posicionada {
+  position: absolute;
+  margin: 0;
+  max-width: none;
+  max-height: none;
+}
+
+/* Colada nas quatro bordas da tela, o canto arredondado não faria sentido. */
+.janela--maximizada {
+  border-radius: 0;
+}
+
+.janela--maximizada .dialogo__barra {
+  border-radius: 0;
+}
+
+/* Botão de maximizar, ao lado do de fechar e com a mesma discrição. */
+.janela__maximizar {
+  min-width: 0;
+  padding: 0 6px;
+  border: none;
+  background: none;
+  line-height: 1;
+  color: var(--cor-texto-suave);
+}
+
+.janela__maximizar:hover:not(:disabled) {
+  border: none;
+  background: var(--cor-fechar-hover);
+  color: var(--cor-texto);
+}
+
+.janela__maximizar svg {
+  display: block;
+  width: 10px;
+  height: 10px;
+}
+
+/* --- Alças de redimensionamento ----------------------------------------- */
+
+/*
+  Ficam meio dentro, meio fora da moldura: por fora sozinhas exigiriam mirar no
+  vazio entre a janela e o fundo, e por dentro cobririam o conteúdo.
+*/
+.janela__aresta {
+  position: absolute;
+  z-index: 2;
+}
+
+.janela__aresta--n,
+.janela__aresta--s {
+  left: 0;
+  right: 0;
+  height: 6px;
+  cursor: ns-resize;
+}
+
+.janela__aresta--n {
+  top: -3px;
+}
+
+.janela__aresta--s {
+  bottom: -3px;
+}
+
+.janela__aresta--e,
+.janela__aresta--w {
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  cursor: ew-resize;
+}
+
+.janela__aresta--e {
+  right: -3px;
+}
+
+.janela__aresta--w {
+  left: -3px;
+}
+
+/* Os cantos vêm por cima das bordas: quem mira o canto quer os dois eixos. */
+.janela__aresta--ne,
+.janela__aresta--nw,
+.janela__aresta--se,
+.janela__aresta--sw {
+  z-index: 3;
+  width: 14px;
+  height: 14px;
+}
+
+.janela__aresta--nw {
+  top: -3px;
+  left: -3px;
+  cursor: nwse-resize;
+}
+
+.janela__aresta--ne {
+  top: -3px;
+  right: -3px;
+  cursor: nesw-resize;
+}
+
+.janela__aresta--sw {
+  bottom: -3px;
+  left: -3px;
+  cursor: nesw-resize;
+}
+
+.janela__aresta--se {
+  bottom: -3px;
+  right: -3px;
+  cursor: nwse-resize;
+}
+
+/* Maximizada não há borda para arrastar. */
+.janela--maximizada .janela__aresta {
+  display: none;
+}

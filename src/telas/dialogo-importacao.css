@@ -1,0 +1,67 @@
+/* Escolha de conexão para importar (requisito 25). */
+
+.dialogo-importacao {
+  width: 760px;
+}
+
+.dialogo-importacao__corpo {
+  padding: 10px 12px 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.dialogo-importacao table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  display: block;
+  max-height: 46vh;
+  overflow: auto;
+  border: 1px solid var(--cor-borda);
+  background: var(--cor-fundo-painel);
+}
+
+.dialogo-importacao th {
+  position: sticky;
+  top: 0;
+  padding: 4px 8px;
+  text-align: left;
+  background: linear-gradient(var(--cor-cabecalho-de), var(--cor-cabecalho-ate));
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.dialogo-importacao td {
+  padding: 3px 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dialogo-importacao th:first-child,
+.dialogo-importacao td:first-child {
+  width: 30%;
+}
+
+.dialogo-importacao th:last-child,
+.dialogo-importacao td:last-child {
+  width: 26%;
+  color: var(--cor-texto-suave);
+}
+
+.dialogo-importacao tbody tr {
+  cursor: default;
+}
+
+.dialogo-importacao tbody tr:hover {
+  background: var(--cor-hover-suave);
+}
+
+.dialogo-importacao tbody tr[aria-selected="true"] {
+  background: var(--cor-destaque-fraca);
+}
+
+.dialogo-importacao__aviso {
+  margin: 8px 0 4px;
+  color: var(--cor-texto-suave);
+}

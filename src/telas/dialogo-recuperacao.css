@@ -1,0 +1,90 @@
+/* Tela de recuperação das consultas guardadas. */
+
+.dialogo-recuperacao {
+  width: 660px;
+  height: 520px;
+}
+
+.recuperacao__corpo {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 8px;
+  background: var(--cor-fundo-painel);
+}
+
+.recuperacao__item {
+  padding: 7px 9px;
+  border: 1px solid var(--cor-borda-suave);
+  border-radius: var(--raio);
+  margin-bottom: 6px;
+  cursor: default;
+  outline: none;
+}
+
+.recuperacao__item:hover {
+  background: var(--cor-hover-suave);
+}
+
+.recuperacao__item--ativa,
+.recuperacao__item--ativa:hover {
+  background: var(--cor-destaque-fraca);
+  border-color: var(--cor-destaque);
+}
+
+.recuperacao__cabecalho {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.recuperacao__titulo {
+  flex: 1;
+  min-width: 0;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.recuperacao__quando,
+.recuperacao__conexao,
+.recuperacao__origem {
+  color: var(--cor-texto-suave);
+  font-size: 12px;
+}
+
+.recuperacao__detalhe {
+  display: flex;
+  gap: 10px;
+  margin-top: 1px;
+}
+
+/* O caminho de origem é o dado mais comprido da entrada e o que menos importa
+   por inteiro: encolhe primeiro. */
+.recuperacao__origem {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: Consolas, "Cascadia Mono", monospace;
+}
+
+.recuperacao__amostra {
+  margin: 5px 0 0;
+  padding: 4px 6px;
+  border-radius: 2px;
+  background: var(--cor-fundo-barra);
+  font-family: Consolas, "Cascadia Mono", monospace;
+  font-size: 12px;
+  line-height: 1.35;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--cor-texto-suave);
+}
+
+.recuperacao__vazio {
+  margin: 0;
+  padding: 12px;
+  color: var(--cor-texto-suave);
+}

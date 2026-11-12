@@ -1,0 +1,27 @@
+/* Divisor arrastável entre painéis. */
+
+.divisor {
+  flex-shrink: 0;
+  background: var(--cor-fundo-barra);
+}
+
+/* A faixa é estreita, mas precisa de alvo suficiente para o ponteiro pegar. */
+.divisor--vertical {
+  width: 5px;
+  cursor: ew-resize;
+}
+
+.divisor--horizontal {
+  height: 5px;
+  cursor: ns-resize;
+}
+
+.divisor:hover,
+.divisor--ativo {
+  background: var(--cor-borda);
+}
+
+.divisor:focus-visible {
+  outline: 1px solid var(--cor-texto);
+  outline-offset: -1px;
+}

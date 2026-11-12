@@ -1,0 +1,48 @@
+[package]
+name = "cururu"
+version = "0.1.104"
+description = "Cliente Oracle leve"
+authors = ["yurimj"]
+license-file = "../LICENCA.md"
+edition = "2021"
+rust-version = "1.88"
+
+[build-dependencies]
+tauri-build = { version = "2.6.3", features = [] }
+
+[dependencies]
+tauri = { version = "2.11.3", features = [] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+oracle = "0.6.3"
+mongodb = "3.10"
+percent-encoding = "2.3"
+windows-sys = { version = "0.61.2", features = [
+    "Win32_Security_Cryptography",
+    "Win32_Foundation",
+    "Win32_Graphics_Gdi",
+    "Win32_Networking_WinHttp",
+    "Win32_System_DataExchange",
+    "Win32_System_LibraryLoader",
+    "Win32_System_Registry",
+    "Win32_System_SystemInformation",
+    "Win32_System_Threading",
+    "Win32_UI_Shell",
+    "Win32_UI_WindowsAndMessaging",
+] }
+tauri-plugin-dialog = "2.7.2"
+tiberius = { version = "0.12.3", features = ["sql-browser-tokio", "tokio"] }
+# O `tiberius` devolve o resultado como fluxo; ler dele pede o `TryStreamExt`.
+futures-util = "0.3.33"
+tokio = { version = "1.53.1", features = ["macros", "net", "rt", "sync", "time"] }
+tokio-util = { version = "0.7.19", features = ["compat"] }
+# Compressão do `.xlsx`, que é um zip. Não acrescenta nada ao build: já
+# vinha na árvore de dependências pelo `png` do Tauri.
+flate2 = "1.1"
+
+[profile.release]
+# Foco do projeto é consumo de memória e velocidade; tempo de compilação e
+# tamanho do binário não são critério (ver premissas.md).
+lto = true
+codegen-units = 1
+strip = true

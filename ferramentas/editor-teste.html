@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Banco de provas do editor SQL e da árvore</title>
+    <link rel="stylesheet" href="/src/estilo.css" />
+    <style>
+      body {
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+      }
+      #palco {
+        flex: 1;
+        min-height: 0;
+        display: flex;
+      }
+      #arvore-teste {
+        width: 240px;
+        flex: none;
+        overflow: auto;
+        border-right: 1px solid #ccc;
+        background: var(--cor-fundo-painel);
+      }
+      #estado {
+        flex-shrink: 0;
+        padding: 6px 10px;
+        border-top: 1px solid #ccc;
+        font: 12px Consolas, monospace;
+        white-space: pre;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="palco"></div>
+    <div id="estado">—</div>
+    <script type="module" src="/ferramentas/editor-teste.ts"></script>
+  </body>
+</html>

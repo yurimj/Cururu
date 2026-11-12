@@ -1,0 +1,198 @@
+/* Grid de resultados (requisitos 6, 20 e 21). */
+
+.grid {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--cor-fundo-painel);
+  outline: none;
+}
+
+.grid__cabecalho {
+  flex-shrink: 0;
+  background: linear-gradient(var(--cor-cabecalho-de), var(--cor-cabecalho-ate));
+  border-bottom: 1px solid var(--cor-borda);
+  /* Acompanha a rolagem horizontal do corpo. */
+  overflow: hidden;
+}
+
+/* As células do cabeçalho moram numa linha própria, e não no cabeçalho, pelo
+   mesmo motivo de `.grid__linha`: a coluna do número só consegue ficar grudada
+   na esquerda enquanto couber dentro do bloco que a contém. */
+.grid__cabecalho-linha {
+  display: flex;
+  min-width: max-content;
+}
+
+/* Espaço da barra de rolagem vertical do corpo, para o cabeçalho poder rolar
+   tanto quanto ele. A largura é medida em tempo de execução e vale zero onde a
+   barra é sobreposta. */
+.grid__folga-da-barra {
+  flex: 0 0 0;
+}
+
+.grid__rolagem {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  position: relative;
+}
+
+.grid__espacador {
+  width: 1px;
+}
+
+.grid__corpo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  will-change: transform;
+}
+
+.grid__linha {
+  display: flex;
+  height: 22px;
+  /* A linha precisa ser tão larga quanto as suas células, e não apenas tanto
+     quanto a área visível: é ela que delimita até onde a coluna do número
+     consegue acompanhar a rolagem horizontal. */
+  min-width: max-content;
+}
+
+.grid__linha:nth-child(even) {
+  background: var(--cor-grid-linha-par);
+}
+
+.grid__linha:hover {
+  background: var(--cor-hover-suave);
+}
+
+/* A classe aparece duas vezes de propósito, e é a correção de um defeito: com
+   `.grid__linha--selecionada` sozinha a regra vale menos que a da linha par
+   acima — uma classe contra uma classe mais uma pseudo-classe —, e a linha par
+   apagava a marca de seleção. O sintoma era a metade das linhas não parecer
+   escolhida, e só até o mouse passar por cima: `:hover` na selecionada empata
+   com a linha par e vem depois, então aquela sim aparecia. Repetir a classe
+   empata a conta e o "vem depois" resolve. */
+.grid__linha.grid__linha--selecionada,
+.grid__linha.grid__linha--selecionada:hover {
+  background: var(--cor-destaque-fraca);
+}
+
+.grid__celula--selecionada {
+  background: var(--cor-destaque-fraca);
+  outline: 1px solid var(--cor-destaque);
+  outline-offset: -1px;
+}
+
+.grid__celula {
+  flex: 0 0 160px;
+  min-width: 0;
+  padding: 3px 6px;
+  border-right: 1px solid var(--cor-borda-suave);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: Consolas, "Cascadia Mono", monospace;
+  font-size: 12px;
+  line-height: 15px;
+  cursor: default;
+}
+
+.grid__celula--cabecalho {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 12.5px;
+  border-right-color: var(--cor-borda);
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Coluna estreitada não pode empurrar a seta de ordenação para fora: quem
+   encolhe e ganha reticências é o nome. */
+.grid__nome-da-coluna {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Divisa de redimensionar, no canto direito do cabeçalho. Fica invisível até
+   o mouse chegar perto, como no SQL Developer. */
+.grid__alca {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 6px;
+  height: 100%;
+  cursor: col-resize;
+}
+
+.grid__alca:hover,
+.grid__alca--ativa {
+  background: var(--cor-destaque);
+  opacity: 0.5;
+}
+
+.grid__celula--cabecalho:hover {
+  background: color-mix(in srgb, var(--cor-destaque) 10%, transparent);
+}
+
+.grid__celula--cabecalho.grid__celula--coluna-selecionada {
+  background: var(--cor-destaque-fraca);
+  box-shadow: inset 0 -2px 0 var(--cor-destaque);
+}
+
+/* A coluna do número fica parada na esquerda enquanto o resto rola — a mesma
+   ideia do cabeçalho, só que na horizontal. O fundo precisa ser opaco: as
+   células das outras colunas passam por baixo dela. */
+.grid__celula--numero {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  flex: 0 0 52px;
+  text-align: right;
+  color: var(--cor-texto-suave);
+  background: var(--cor-grid-numero-fundo);
+  border-right: 1px solid var(--cor-borda);
+}
+
+/* O canto do cabeçalho fica parado pelo mesmo motivo, e acima das outras
+   células do cabeçalho. */
+.grid__celula--numero.grid__celula--cabecalho {
+  position: sticky;
+  z-index: 2;
+}
+
+/* Com a coluna do número sempre à vista, é nela que a linha escolhida continua
+   marcada depois de a rolagem levar as suas células para fora da tela. */
+.grid__celula--numero-marcado {
+  background: var(--cor-destaque-fraca);
+  color: var(--cor-texto);
+  font-weight: 600;
+  box-shadow: inset 2px 0 0 var(--cor-destaque);
+}
+
+.grid__celula--numero-dado {
+  text-align: right;
+}
+
+/* Requisito 20: NULL não pode se confundir com texto vazio. */
+.grid__celula--nula {
+  color: var(--cor-desabilitado-texto);
+  font-style: italic;
+}
+
+.grid__celula--longa {
+  cursor: zoom-in;
+}
+
+.grid__seta {
+  margin-left: auto;
+  font-size: 9px;
+  color: var(--cor-destaque);
+}

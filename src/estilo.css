@@ -1,0 +1,578 @@
+/*
+  Estilo base do Cururu.
+
+  A referência visual é o Oracle SQL Developer: interface densa, informação
+  próxima, sem espaçamento decorativo. Fonte do sistema para não carregar
+  fontes externas (peso e memória).
+
+  As cores moram em variáveis porque a interface tem dois temas (Claro e
+  Escuro, no menu). O bloco `:root[data-tema="escuro"]` logo abaixo redefine
+  as mesmas variáveis para o tema escuro; o resto do projeto só lê `var(--…)`
+  e nunca precisa saber qual tema está valendo.
+*/
+
+:root {
+  --cor-fundo: #f4f4f4;
+  --cor-fundo-painel: #ffffff;
+  --cor-fundo-barra: #ececed;
+  --cor-borda: #b8b8b8;
+  --cor-borda-suave: #d8d8d8;
+  --cor-texto: #1c1c1c;
+  --cor-texto-suave: #5c5c5c;
+  --cor-destaque: #2f6fb5;
+  --cor-destaque-forte: #245d98;
+  --cor-destaque-fraca: #d9e7f6;
+  --cor-erro: #b3261e;
+  --cor-sucesso: #2e7d32;
+
+  /* Botões, cabeçalhos e abas neutras (gradiente claro-para-mais-claro). */
+  --cor-botao-de: #fdfdfd;
+  --cor-botao-ate: #e9e9e9;
+  --cor-botao-hover-de: #ffffff;
+  --cor-botao-hover-ate: #dcebf9;
+  --cor-desabilitado-texto: #9a9a9a;
+  --cor-desabilitado-fundo: #f0f0f0;
+  --cor-cabecalho-de: #fbfbfb;
+  --cor-cabecalho-ate: #ededed;
+  --cor-tab-de: #f2f2f2;
+  --cor-tab-ate: #e4e4e4;
+  --cor-tab-fechar-hover: #d8d8d8;
+  --cor-aba-inferior-hover: #e2e2e2;
+
+  /* Diálogo. */
+  --cor-sobreposicao: rgba(0, 0, 0, 0.28);
+  --cor-dialogo-borda: #6f6f6f;
+  --cor-fechar-hover: #e6e6e6;
+
+  /* Avisos. */
+  --cor-aviso-fundo: #fdf3d8;
+  --cor-aviso-texto: #6b4e00;
+  --cor-aviso-erro-fundo: #fbe4e2;
+
+  /* Hover suave: linhas da árvore, listas e itens de recuperação. */
+  --cor-hover-suave: #f0f5fb;
+  --cor-moldura-amostra: rgba(0, 0, 0, 0.35);
+
+  /* Árvore de objetos. */
+  --cor-categoria-icone: #8a6d3b;
+  --cor-fonte-icone: #6a5acd;
+
+  /* Grid de resultado. */
+  --cor-grid-linha-par: #fafcfe;
+  --cor-grid-numero-fundo: #f2f2f2;
+
+  /* Editor SQL. */
+  --cor-editor-gutter-texto: #8a8a8a;
+  --cor-editor-linha-ativa: #f5f9fe;
+  --cor-editor-linha-ativa-gutter: #e6eef7;
+  --cor-selecao-editor: #a8ccf0;
+  --cor-selecao-correspondencia: #e4eeda;
+
+  /* Zoom do editor (Ctrl+roda, Ctrl+= e Ctrl+-). `zoom-editor.ts` reescreve
+     `--zoom-editor` no <html>, e o tamanho-base fica escrito aqui, num lugar
+     só: o JavaScript não precisa saber quantos pixels tem 100%. */
+  --zoom-editor: 1;
+  --tamanho-fonte-editor: calc(12.5px * var(--zoom-editor));
+
+  --altura-barra: 30px;
+  --raio: 3px;
+
+  /* Diz ao Chromium para desenhar controles nativos (checkbox, radio,
+     select, spinner de número, barra de rolagem) no tom claro — sem isto
+     eles ficariam sempre claros, mesmo com o tema escuro escolhido. */
+  color-scheme: light;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  font-size: 13px;
+  color: var(--cor-texto);
+}
+
+:root[data-tema="escuro"] {
+  --cor-fundo: #1e1e1e;
+  --cor-fundo-painel: #252526;
+  --cor-fundo-barra: #2d2d2d;
+  --cor-borda: #4b4b4b;
+  --cor-borda-suave: #3a3a3a;
+  --cor-texto: #e0e0e0;
+  --cor-texto-suave: #9d9d9d;
+  --cor-destaque: #5b9bd9;
+  --cor-destaque-forte: #7db3e8;
+  --cor-destaque-fraca: #1e3a56;
+  --cor-erro: #e5534b;
+  --cor-sucesso: #4caf50;
+
+  --cor-botao-de: #3a3a3a;
+  --cor-botao-ate: #2c2c2c;
+  --cor-botao-hover-de: #3d4d5c;
+  --cor-botao-hover-ate: #2a3a48;
+  --cor-desabilitado-texto: #6e6e6e;
+  --cor-desabilitado-fundo: #2a2a2a;
+  --cor-cabecalho-de: #333333;
+  --cor-cabecalho-ate: #2a2a2a;
+  --cor-tab-de: #2c2c2c;
+  --cor-tab-ate: #242424;
+  --cor-tab-fechar-hover: #3a3a3a;
+  --cor-aba-inferior-hover: #333333;
+
+  --cor-sobreposicao: rgba(0, 0, 0, 0.5);
+  --cor-dialogo-borda: #5f5f5f;
+  --cor-fechar-hover: #3a3a3a;
+
+  --cor-aviso-fundo: #4a3f14;
+  --cor-aviso-texto: #e8c874;
+  --cor-aviso-erro-fundo: #4a2422;
+
+  --cor-hover-suave: #26374a;
+  --cor-moldura-amostra: rgba(255, 255, 255, 0.35);
+
+  --cor-categoria-icone: #c9a86a;
+  --cor-fonte-icone: #9d90e8;
+
+  /* A linha par tem de se distinguir do fundo do painel (#252526) sem virar
+     zebra: #292929 diferia dele em quatro pontos de cada canal, e no escuro
+     isso não se via. #2f2f30 diferencia dez pontos — contraste de 1,15 contra
+     1,05 —, o bastante para a vista seguir a linha e pouco para o painel
+     continuar escuro. */
+  --cor-grid-linha-par: #2f2f30;
+  --cor-grid-numero-fundo: #2a2a2a;
+
+  --cor-editor-gutter-texto: #6e6e6e;
+  --cor-editor-linha-ativa: #242e38;
+  --cor-editor-linha-ativa-gutter: #2a3a4a;
+  --cor-selecao-editor: #264f78;
+  --cor-selecao-correspondencia: #3d4a2a;
+
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/*
+  O `display` do agente de usuário para [hidden] perde para qualquer regra de
+  classe que defina display (grid, flex…). Como a interface esconde blocos pelo
+  atributo, a regra precisa ganhar sempre.
+*/
+[hidden] {
+  display: none !important;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: var(--cor-fundo);
+}
+
+/* A rolagem nativa acompanha o tema — sem isto o Chromium desenha sempre a
+   barra clara, mesmo com o resto da tela no escuro. */
+html {
+  scrollbar-color: var(--cor-borda) var(--cor-fundo-barra);
+}
+
+#aplicacao {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Tipografia e controles ------------------------------------------- */
+
+button {
+  font: inherit;
+  padding: 3px 14px;
+  min-width: 84px;
+  background: linear-gradient(var(--cor-botao-de), var(--cor-botao-ate));
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  background: linear-gradient(var(--cor-botao-hover-de), var(--cor-botao-hover-ate));
+  border-color: var(--cor-destaque);
+}
+
+button:disabled {
+  color: var(--cor-desabilitado-texto);
+  cursor: default;
+  background: var(--cor-desabilitado-fundo);
+}
+
+/*
+  A cor do texto, à parte: o Chromium tem um preto/branco puro padrão para
+  campo de formulário que segue `color-scheme` em vez de herdar `color` do
+  ancestral, e alguns campos da tela são criados sem `type="text"` explícito
+  no HTML — o que basta para a herança normal também não valer para eles.
+*/
+input,
+select,
+textarea {
+  color: var(--cor-texto);
+}
+
+input[type="text"],
+input[type="password"],
+input[type="number"],
+select {
+  font: inherit;
+  padding: 2px 5px;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  background: var(--cor-fundo-painel);
+  min-width: 0;
+}
+
+input:focus,
+select:focus,
+button:focus-visible {
+  outline: 1px solid var(--cor-destaque);
+  outline-offset: -1px;
+}
+
+label {
+  user-select: none;
+}
+
+fieldset {
+  border: 1px solid var(--cor-borda-suave);
+  border-radius: var(--raio);
+  margin: 0;
+  padding: 10px 12px;
+}
+
+/* --- Formulario: grade de rotulo + campo -------------------------------- */
+
+/*
+  Primitivas de formulario compartilhadas: grade de rotulo + campo, radio,
+  caixa de marcacao e separador. Nasceram na tela de conexoes e moraram la
+  enquanto ela era a unica com formulario; hoje as telas do SQL Server Agent
+  usam as mesmas, e deixa-las na folha de uma tela especifica faria a outra
+  depender de um arquivo que nao importa.
+*/
+
+.grade {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 7px 8px;
+}
+
+.grade > .largura-total {
+  grid-column: 2 / -1;
+}
+
+.grade input[type="text"],
+.grade input[type="password"],
+.grade select {
+  width: 100%;
+}
+
+.opcao-radio {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.caixa-marcacao {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.separador-painel {
+  width: 100%;
+  margin: 2px 0;
+  border: 0;
+  border-top: 1px solid var(--cor-borda);
+}
+
+/* --- Moldura comum das caixas de diálogo -------------------------------- */
+
+.dialogo-fundo {
+  position: fixed;
+  inset: 0;
+  background: var(--cor-sobreposicao);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.dialogo {
+  max-width: calc(100vw - 32px);
+  max-height: calc(100vh - 32px);
+  display: flex;
+  flex-direction: column;
+  background: var(--cor-fundo);
+  border: 1px solid var(--cor-dialogo-borda);
+  border-radius: 4px;
+  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.35);
+}
+
+/* A barra é também a alça que move a janela (ver componentes/janela.ts): o
+   arrasto não pode sair selecionando o título. */
+.dialogo__barra {
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  background: linear-gradient(var(--cor-cabecalho-de), var(--cor-cabecalho-ate));
+  border-bottom: 1px solid var(--cor-borda);
+  border-radius: 3px 3px 0 0;
+}
+
+.dialogo__barra h1 {
+  flex: 1;
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.dialogo__fechar {
+  min-width: 0;
+  padding: 0 6px;
+  border: none;
+  background: none;
+  font-size: 14px;
+  line-height: 1;
+  color: var(--cor-texto-suave);
+}
+
+.dialogo__fechar:hover {
+  background: var(--cor-fechar-hover);
+  color: var(--cor-texto);
+}
+
+.dialogo__rodape {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-top: 1px solid var(--cor-borda);
+  background: var(--cor-fundo-barra);
+  border-radius: 0 0 3px 3px;
+}
+
+.dialogo__botoes {
+  display: flex;
+  gap: 6px;
+}
+
+/* Botao que confirma o dialogo: um so por tela, e sempre o primeiro. */
+.botao-principal {
+  border-color: var(--cor-destaque);
+  background: var(--cor-destaque);
+  color: #fff;
+}
+
+.botao-principal:hover:not(:disabled) {
+  border-color: var(--cor-destaque-forte);
+  background: var(--cor-destaque-forte);
+}
+
+.status {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.status--erro {
+  color: var(--cor-erro);
+}
+
+.status--sucesso {
+  color: var(--cor-sucesso);
+}
+
+/* --- Aviso de diagnóstico --------------------------------------------- */
+
+.aviso {
+  margin: 0;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--cor-borda);
+  background: var(--cor-aviso-fundo);
+  color: var(--cor-aviso-texto);
+}
+
+.aviso--erro {
+  background: var(--cor-aviso-erro-fundo);
+  color: var(--cor-erro);
+}
+
+.aviso__detalhe {
+  margin: 4px 0 0;
+  color: inherit;
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.aviso__detalhe li {
+  font-family: Consolas, "Cascadia Mono", monospace;
+}
+
+/* --- Área principal ---------------------------------------------------- */
+
+.area-principal {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+.painel-lateral {
+  width: 280px;
+  min-width: 180px;
+  background: var(--cor-fundo-painel);
+  border-right: 1px solid var(--cor-borda);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.painel-lateral__titulo {
+  height: var(--altura-barra);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 8px;
+  background: var(--cor-fundo-barra);
+  border-bottom: 1px solid var(--cor-borda);
+  font-weight: 600;
+}
+
+.painel-lateral__conteudo {
+  flex: 1;
+  overflow: auto;
+  padding: 4px 0;
+}
+
+/* O título não tem mais texto: é o botão de menu à esquerda, e o de minimizar
+   encostado na direita pela sobra que este `auto` cria. */
+.painel-lateral__alternar {
+  margin-left: auto;
+}
+
+/* Menu e minimizar usam o mesmo botãozinho compacto no canto do painel. */
+.painel-lateral__alternar,
+.painel-lateral__menu {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  min-width: 0;
+  padding: 0;
+  font-size: 12px;
+  line-height: 1;
+}
+
+/* Minimizado sobra só a faixa do título com o botão de restaurar. O
+   `min-width` do painel precisa ceder aqui, senão ele continuaria com 180px. */
+.painel-lateral--minimizado {
+  flex: 0 0 auto;
+  width: auto;
+  min-width: 0;
+}
+
+.painel-lateral--minimizado .painel-lateral__menu,
+.painel-lateral--minimizado .barra-ferramentas,
+.painel-lateral--minimizado .painel-lateral__conteudo {
+  display: none;
+}
+
+.painel-lateral--minimizado .painel-lateral__titulo {
+  padding: 0 2px;
+}
+
+.area-trabalho {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--cor-fundo);
+}
+
+.vazio {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--cor-texto-suave);
+  text-align: center;
+}
+
+.vazio img {
+  width: 96px;
+  height: 96px;
+  opacity: 0.5;
+}
+
+.vazio p {
+  margin: 0;
+}
+
+/* --- Barra de status da janela ------------------------------------------ */
+
+.barra-status {
+  flex-shrink: 0;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  background: var(--cor-fundo-barra);
+  border-top: 1px solid var(--cor-borda);
+  color: var(--cor-texto-suave);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.barra-status--erro {
+  color: var(--cor-erro);
+}
+
+/* --- Barra de ferramentas do painel lateral ----------------------------- */
+
+.barra-ferramentas {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 6px;
+  background: var(--cor-fundo-painel);
+  border-bottom: 1px solid var(--cor-borda-suave);
+}
+
+.botao-simbolo {
+  min-width: 0;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cor-texto-suave);
+}
+
+.botao-simbolo svg {
+  width: 14px;
+  height: 14px;
+}
+
+.botao-simbolo:hover:not(:disabled) {
+  color: var(--cor-destaque);
+}
+
+.botao-simbolo:disabled {
+  opacity: 0.4;
+}
+
+.painel-lateral__vazio {
+  margin: 0;
+  padding: 10px;
+  color: var(--cor-texto-suave);
+}

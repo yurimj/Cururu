@@ -1,0 +1,24 @@
+{
+  "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
+  "bundle": {
+    "active": true,
+    "targets": ["nsis"],
+    "publisher": "yurimj",
+    "copyright": "© 2026 yurimj",
+    "shortDescription": "Cliente Oracle leve",
+    "longDescription": "Cliente SQL para Oracle: árvore de objetos, editor com autocomplete, grid virtualizado e exportação. O Oracle Instant Client vai embutido — não é preciso instalar cliente Oracle na máquina.",
+    "resources": {
+      "../runtime/instantclient_19_31/*": "instantclient/"
+    },
+    "windows": {
+      "nsis": {
+        "languages": ["English", "PortugueseBR", "Portuguese", "Spanish"],
+        "displayLanguageSelector": true,
+        "installerHooks": "instalador.nsh",
+        "installMode": "currentUser",
+        "installerIcon": "icons/icon.ico",
+        "compression": "lzma"
+      }
+    }
+  }
+}

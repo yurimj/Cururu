@@ -1,0 +1,78 @@
+.painel-mongo {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+}
+
+.painel-mongo__barra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 8px;
+}
+
+.painel-mongo__barra label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.painel-mongo__barra select {
+  max-width: 250px;
+}
+
+.painel-mongo__modo,
+.painel-mongo__legenda,
+.painel-mongo__estado {
+  color: var(--cor-texto-suave);
+}
+
+.painel-mongo__legenda {
+  margin: 0;
+}
+
+.painel-mongo__editor {
+  min-height: 90px;
+  max-height: 35%;
+  display: flex;
+  border: 1px solid var(--cor-borda);
+  background: var(--cor-fundo);
+}
+
+.painel-mongo__editor .cm-editor {
+  flex: 1;
+  min-width: 0;
+}
+
+.painel-mongo__editor .cm-content {
+  caret-color: var(--cor-texto);
+}
+
+.painel-mongo__estado--erro {
+  color: var(--cor-erro);
+}
+
+.painel-mongo__resultados {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 6px 8px;
+  border: 1px solid var(--cor-borda);
+  background: var(--cor-fundo-painel);
+  font-family: Consolas, monospace;
+  overflow-wrap: anywhere;
+  user-select: text;
+}
+
+.painel-mongo__resultados summary {
+  cursor: pointer;
+  padding-block: 3px;
+}
+
+.painel-mongo__campos {
+  padding-inline-start: 18px;
+}

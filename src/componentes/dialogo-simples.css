@@ -1,0 +1,60 @@
+/*
+  Confirmação e pergunta de uma linha. Estas regras moravam na folha da tela de
+  botões rápidos, e saíram de lá quando o SQL Server Agent passou a usar as
+  mesmas duas perguntas.
+*/
+
+.dialogo-simples {
+  width: 380px;
+}
+
+.dialogo-simples__corpo {
+  padding: 14px 16px;
+  background: var(--cor-fundo-painel);
+}
+
+.dialogo-simples__corpo p {
+  margin: 0;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.dialogo-simples__campo {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.dialogo-simples__campo input {
+  width: 100%;
+  font: inherit;
+  padding: 3px 5px;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  background: var(--cor-fundo-painel);
+}
+
+/* Pergunta de várias linhas: mais larga, porque o que se digita aqui é uma
+   frase inteira, e não um nome. */
+.dialogo-simples--longo {
+  width: 460px;
+}
+
+.dialogo-simples__campo textarea {
+  width: 100%;
+  font: inherit;
+  padding: 3px 5px;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  background: var(--cor-fundo-painel);
+  color: inherit;
+  /* Só na vertical: redimensionar na horizontal esticaria o diálogo. */
+  resize: vertical;
+}
+
+/* Ação destrutiva: o vermelho está na borda e no texto, não no fundo — um botão
+   vermelho cheio ao lado de Cancelar convida ao clique errado. */
+.botao-excluir {
+  color: var(--cor-erro);
+  border-color: #d7a19d;
+}
