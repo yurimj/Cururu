@@ -14,7 +14,18 @@ Criado por **[@yurijiacomo](https://www.instagram.com/yurijiacomo)**.
 Este repositório contém os fontes com exemplos fictícios e histórico iniciado
 para a publicação. Dados locais e bibliotecas proprietárias não fazem parte dele.
 
+## Como usar
+
+Baixe o instalador na página de [downloads e releases](https://github.com/yurimj/Cururu-releases/releases),
+instale e abra o Cururu pelo atalho criado. Se recebeu a pasta portátil, mantenha
+os arquivos juntos e execute `cururu.exe`.
+
+A interface faz parte do aplicativo. Para usar o Cururu, não é necessário abrir
+um endereço no navegador nem instalar Node.js ou Rust.
+
 ## Desenvolvimento
+
+As instruções abaixo são para quem vai alterar o código-fonte.
 
 Instale Node.js, Rust e os pré-requisitos do Tauri para Windows. Depois:
 
@@ -23,8 +34,10 @@ npm ci
 npm run dev
 ```
 
-O frontend abre em `http://localhost:1420`. No navegador, o aviso de ausência
-da ponte `invoke` do Tauri é esperado; as operações de banco exigem o aplicativo.
+Esse comando inicia apenas o servidor de desenvolvimento da interface, disponível
+em `http://localhost:1420` para verificação no navegador. Esse endereço é usado
+somente durante o desenvolvimento. No navegador, o aviso de ausência da ponte
+`invoke` do Tauri é esperado; as operações de banco exigem o aplicativo nativo.
 Para desenvolver o aplicativo nativo:
 
 ```powershell
