@@ -6,6 +6,16 @@ Este arquivo trata de **como trabalhar** no Cururu: verificar, versionar, compil
 - **Por que as decisões foram tomadas assim** → [premissas.md](premissas.md)
 - **O que mudou em cada versão** → [versoes.md](versoes.md)
 
+## Repositório público e informações sensíveis
+
+**Este repositório, [yurimj/Cururu](https://github.com/yurimj/Cururu), é público.** Tudo que for versionado, inclusive o histórico de commits, pode ser lido por qualquer pessoa.
+
+- Nunca inclua senhas, tokens, chaves privadas, strings de conexão com credenciais ou dados reais de clientes em código, comentários, documentação, testes, exemplos, logs ou arquivos anexados a releases.
+- Use dados fictícios em exemplos e testes. Antes de compartilhar logs ou capturas de tela, remova credenciais, dados pessoais e informações internas.
+- Mantenha segredos fora do Git, em variáveis de ambiente ou arquivos locais ignorados. Não embuta segredos no executável distribuído. Adicionar um arquivo ao `.gitignore` não remove conteúdo já versionado.
+- Antes de criar commits ou publicar arquivos, revise o conteúdo e o diff para evitar exposição de informações sensíveis.
+- Se encontrar uma credencial exposta, avise o usuário sem reproduzir seu valor e providencie sua revogação ou troca pelo responsável. Apagar o arquivo ou criar um novo commit não elimina a exposição no histórico; qualquer limpeza do histórico deve ser combinada com o usuário.
+
 ## Como verificar uma alteração
 
 O Cururu é um aplicativo Tauri: o frontend é web (`src/`) e o backend é Rust (`src-tauri/`). Isso dá dois ambientes de verificação, e escolher o errado custa caro — um `cargo build --release` leva cerca de quatro minutos, e pagá-lo para olhar um pixel é desperdício puro.
@@ -122,9 +132,7 @@ A versão nova também recebe a sua seção em **[versoes.md](versoes.md)**, que
 
 ### Onde o instalador é publicado
 
-O instalador vai para **[github.com/yurimj/Cururu-releases](https://github.com/yurimj/Cururu-releases)**, um repositório **público** que contém apenas releases — nenhum código-fonte. O repositório do projeto, `yurimj/Cururu-private`, continua **privado**.
-
-São dois repositórios porque o GitHub não permite outra coisa: **release de repositório privado é privado também**, e não existe chave para tornar público só o release. As alternativas eram piores. Publicar o repositório inteiro exporia o código; embutir um token no executável distribuído daria a quem recebesse o Cururu acesso de leitura ao código-fonte — que é exatamente o que o repositório privado existe para evitar.
+O instalador e o código-fonte ficam no mesmo repositório público, **[github.com/yurimj/Cururu](https://github.com/yurimj/Cururu)**. A publicação pelo GitHub Actions, o checksum SHA-256 e a atestação de origem estão descritos em [PUBLICACAO.md](PUBLICACAO.md).
 
 Consequência prática: a consulta por atualização é **anônima**, sem token, e não há segredo nenhum dentro do binário distribuído.
 

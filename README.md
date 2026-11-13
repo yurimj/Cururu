@@ -11,14 +11,15 @@ Criado por **[@yurijiacomo](https://www.instagram.com/yurijiacomo)**.
 ## Código-fonte e downloads
 
 - [Código-fonte público](https://github.com/yurimj/Cururu)
-- [Downloads e releases](https://github.com/yurimj/Cururu-releases/releases)
+- [Downloads e releases](https://github.com/yurimj/Cururu/releases)
+- [Publicação pelo GitHub Actions e verificação de checksum e origem](PUBLICACAO.md)
 
 Este repositório contém os fontes com exemplos fictícios e histórico iniciado
 para a publicação. Dados locais e bibliotecas proprietárias não fazem parte dele.
 
 ## Como usar
 
-Baixe o instalador na página de [downloads e releases](https://github.com/yurimj/Cururu-releases/releases),
+Baixe o instalador na página de [downloads e releases](https://github.com/yurimj/Cururu/releases),
 instale e abra o Cururu pelo atalho criado. Se recebeu a pasta portátil, mantenha
 os arquivos juntos e execute `cururu.exe`.
 

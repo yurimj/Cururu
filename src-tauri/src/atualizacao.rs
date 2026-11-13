@@ -1,11 +1,7 @@
 //! Verificação de atualização e instalação da versão nova.
 //!
-//! O Cururu é distribuído por um repositório **público só de releases**
-//! (`yurimj/Cururu-releases`), separado do repositório do código, que é
-//! privado. A separação existe por um motivo concreto: release de repositório
-//! privado também é privado, e a alternativa — embutir um token no executável
-//! distribuído — daria a quem recebesse o aplicativo acesso de leitura ao
-//! código-fonte. Assim a consulta é anônima e não há segredo algum no binário.
+//! Os fontes e os instaladores ficam no repositório público `yurimj/Cururu`.
+//! A consulta às releases é anônima e não há segredo algum no binário.
 //!
 //! O acesso à rede usa o **WinHTTP do próprio Windows**, e não uma biblioteca
 //! HTTP em Rust. Dois motivos, ambos de máquina corporativa, que é onde o
@@ -36,7 +32,7 @@ use crate::erro::{Erro, Resultado};
 use crate::registro;
 
 /// Release mais recente do repositório público de distribuição.
-const ENDERECO_DA_API: &str = "https://api.github.com/repos/yurimj/Cururu-releases/releases/latest";
+const ENDERECO_DA_API: &str = "https://api.github.com/repos/yurimj/Cururu/releases/latest";
 
 /// Domínios de onde o instalador pode ser baixado.
 ///
@@ -537,8 +533,8 @@ mod testes {
     /// interessam e alguns dos que não interessam — estes últimos de propósito,
     /// para o teste provar que o resto do payload é ignorado sem estorvo.
     const RELEASE_DO_GITHUB: &str = r#"{
-      "url": "https://api.github.com/repos/yurimj/Cururu-releases/releases/123",
-      "html_url": "https://github.com/yurimj/Cururu-releases/releases/tag/v0.1.11",
+      "url": "https://api.github.com/repos/yurimj/Cururu/releases/123",
+      "html_url": "https://github.com/yurimj/Cururu/releases/tag/v0.1.11",
       "id": 123,
       "author": { "login": "yurimj", "id": 1 },
       "tag_name": "v0.1.11",
@@ -557,10 +553,10 @@ mod testes {
           "state": "uploaded",
           "size": 55066193,
           "download_count": 0,
-          "browser_download_url": "https://github.com/yurimj/Cururu-releases/releases/download/v0.1.11/Cururu_0.1.11_x64-setup.exe"
+          "browser_download_url": "https://github.com/yurimj/Cururu/releases/download/v0.1.11/Cururu_0.1.11_x64-setup.exe"
         }
       ],
-      "tarball_url": "https://api.github.com/repos/yurimj/Cururu-releases/tarball/v0.1.11",
+      "tarball_url": "https://api.github.com/repos/yurimj/Cururu/tarball/v0.1.11",
       "body": "- **O Cururu passa a ter instalador**: um `setup.exe` com o Instant Client embutido.\n- Nova opção **Procurar Atualizações…** no menu.\n"
     }"#;
 
@@ -575,13 +571,13 @@ mod testes {
         assert_eq!(data_brasileira(&texto(&release, "published_at")), "31/07/2026");
         assert_eq!(
             texto(&release, "html_url"),
-            "https://github.com/yurimj/Cururu-releases/releases/tag/v0.1.11"
+            "https://github.com/yurimj/Cururu/releases/tag/v0.1.11"
         );
 
         let (instalador, tamanho) = instalador_do_release(&release).expect("o release tem .exe");
         assert_eq!(
             instalador,
-            "https://github.com/yurimj/Cururu-releases/releases/download/v0.1.11/Cururu_0.1.11_x64-setup.exe"
+            "https://github.com/yurimj/Cururu/releases/download/v0.1.11/Cururu_0.1.11_x64-setup.exe"
         );
         assert_eq!(tamanho, 55_066_193);
 
@@ -651,7 +647,7 @@ mod testes {
     #[test]
     fn nome_do_instalador_sai_do_endereco_sem_surpresa() {
         let destino = caminho_de_destino(
-            "https://github.com/yurimj/Cururu-releases/releases/download/v0.1.11/Cururu_0.1.11_x64-setup.exe",
+            "https://github.com/yurimj/Cururu/releases/download/v0.1.11/Cururu_0.1.11_x64-setup.exe",
         )
         .unwrap();
         assert_eq!(

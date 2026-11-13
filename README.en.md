@@ -11,7 +11,7 @@ Created by **[@yurijiacomo](https://www.instagram.com/yurijiacomo)**.
 ## Source code and downloads
 
 - [Public source code](https://github.com/yurimj/Cururu)
-- [Downloads and releases](https://github.com/yurimj/Cururu-releases/releases)
+- [Downloads and releases](https://github.com/yurimj/Cururu/releases)
 
 This repository contains the source code with fictional examples and a history
 started for public distribution. Local data and proprietary libraries are not
@@ -19,7 +19,7 @@ included.
 
 ## Getting started
 
-Download the installer from the [downloads and releases page](https://github.com/yurimj/Cururu-releases/releases),
+Download the installer from the [downloads and releases page](https://github.com/yurimj/Cururu/releases),
 install it, and open Cururu using the shortcut created during installation.
 If you received the portable folder, keep its files together and run `cururu.exe`.
 
@@ -52,6 +52,10 @@ See [premissas.md](premissas.md) for its location, configuration, and redistribu
 conditions. [AGENTS.md](AGENTS.md) describes checks and builds;
 [requisitos.md](requisitos.md) documents the product's behavior. These documents
 are written in Portuguese.
+
+Builds published through GitHub Actions include SHA-256 checksums and GitHub
+build provenance attestations. See [publication and verification instructions](PUBLICACAO.md)
+(in Portuguese).
 
 ## License
 

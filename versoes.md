@@ -616,7 +616,7 @@ repositório, porque a tela de Versões só passou a existir na 0.1.4.
 ## 0.1.11 — 31/07/2026
 
 - **O Cururu passa a ter instalador**: um `setup.exe` que instala na pasta do usuário, sem pedir Administrador, já com o Oracle Instant Client embutido.
-- O instalador é publicado em **[github.com/yurimj/Cururu-releases](https://github.com/yurimj/Cururu-releases)**, um repositório público só de distribuição — o código-fonte continua privado.
+- O instalador é publicado nas **[Releases do Cururu](https://github.com/yurimj/Cururu/releases)**, junto do código-fonte público.
 - Nova opção **Procurar Atualizações…** no menu: consulta a versão publicada e, quando há uma mais nova, mostra **o que mudou** antes de qualquer download.
 - Na subida, o Cururu confere se existe versão nova em silêncio. Sem internet, nada aparece na tela: a falha fica no log.
 - Baixar e instalar é **decisão do usuário**, nunca automática. Escolhido "Baixar e instalar", o instalador desce com barra de progresso, é executado e o Cururu se fecha para ele poder substituir os arquivos em uso.

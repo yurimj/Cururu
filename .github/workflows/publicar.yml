@@ -1,0 +1,122 @@
+name: Publicar Cururu
+
+on:
+  workflow_dispatch:
+    inputs:
+      etiqueta:
+        description: Etiqueta dos fontes já enviada ao repositório (v0.1.105, por exemplo)
+        required: true
+        type: string
+      gerar_instalador:
+        description: Gerar e publicar o instalador desta versão
+        required: true
+        default: false
+        type: boolean
+
+concurrency:
+  group: publicar-cururu
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  publicar:
+    if: inputs.gerar_instalador
+    runs-on: windows-2022
+    timeout-minutes: 60
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+    env:
+      ETIQUETA: ${{ inputs.etiqueta }}
+      REPOSITORIO_RELEASES: yurimj/Cururu
+    steps:
+      - name: Conferir etiqueta de publicação
+        shell: pwsh
+        env:
+          REFERENCIA: ${{ github.ref }}
+        run: |
+          if ($env:ETIQUETA -cnotmatch '^v\d+\.\d+\.\d+$') { throw 'Etiqueta inválida.' }
+          if ($env:REFERENCIA -cne "refs/tags/$env:ETIQUETA") { throw 'Execute o workflow na própria etiqueta informada, para a atestação identificar os fontes corretamente.' }
+
+      - name: Obter os fontes da etiqueta
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Preparar Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Conferir versões e preparar notas
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: pwsh
+        run: |
+          node --test ferramentas/publicacao/preparar.test.mjs
+          if ($LASTEXITCODE) { throw 'Falha nos testes da publicação.' }
+          node ferramentas/publicacao/preparar.mjs
+          if ($LASTEXITCODE) { throw 'Falha ao preparar publicação.' }
+
+      - name: Preparar Rust
+        uses: dtolnay/rust-toolchain@b725eda525362e7cf34af9a7243cac1e3f01a7ec # stable
+        with:
+          toolchain: stable
+
+      - name: Instalar dependências do frontend
+        run: npm ci
+
+      - name: Baixar e conferir Oracle Instant Client 19.31
+        shell: pwsh
+        run: |
+          $pacote = Join-Path $env:RUNNER_TEMP 'instantclient.zip'
+          Invoke-WebRequest 'https://download.oracle.com/otn_software/nt/instantclient/1931000/instantclient-basic-windows.x64-19.31.0.0.0dbru.zip' -OutFile $pacote
+          $esperado = '9e990e02e936fe073f05b7cb9bb95bd5163372083826e9321a9d85bff88e829d'
+          if ((Get-FileHash $pacote -Algorithm SHA256).Hash.ToLowerInvariant() -ne $esperado) { throw 'SHA-256 do Instant Client divergente.' }
+          Expand-Archive -LiteralPath $pacote -DestinationPath runtime
+          foreach ($arquivo in @('oci.dll', 'BASIC_LICENSE')) {
+            if (!(Test-Path "runtime/instantclient_19_31/$arquivo")) { throw "Instant Client incompleto: $arquivo" }
+          }
+
+      - name: Compilar instalador com tauri-action
+        uses: tauri-apps/tauri-action@84b9d35b5fc46c1e45415bdb6144030364f7ebc5 # v0
+        with:
+          args: --config src-tauri/tauri.instalador.conf.json --locked
+
+      - name: Conferir instalador e gerar checksum
+        shell: pwsh
+        run: |
+          $versao = $env:ETIQUETA.Substring(1)
+          $instalador = "src-tauri/target/release/bundle/nsis/Cururu_${versao}_x64-setup.exe"
+          if (!(Test-Path $instalador)) { throw "Instalador ausente: $instalador" }
+          New-Item -ItemType Directory -Path publicacao | Out-Null
+          Copy-Item -LiteralPath $instalador -Destination publicacao
+          $nome = Split-Path $instalador -Leaf
+          $hash = (Get-FileHash $instalador -Algorithm SHA256).Hash.ToLowerInvariant()
+          "$hash  $nome" | Set-Content publicacao/SHA256SUMS.txt -Encoding ascii
+
+      - name: Atestar origem do instalador
+        id: origem
+        uses: actions/attest-build-provenance@977bb373ede98d70efdf65b84cb5f73e068dcc2a # v3
+        with:
+          subject-path: publicacao/*.exe
+
+      - name: Publicar somente após checksum e atestação
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ATESTACAO: ${{ steps.origem.outputs.bundle-path }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          Copy-Item -LiteralPath $env:ATESTACAO -Destination publicacao/proveniencia.jsonl
+          gh release create $env:ETIQUETA --repo $env:REPOSITORIO_RELEASES --title "Cururu $($env:ETIQUETA.Substring(1))" --notes-file notas-release.md --draft
+          if ($LASTEXITCODE) { throw 'Falha ao criar rascunho do release.' }
+          gh release upload $env:ETIQUETA publicacao/* --repo $env:REPOSITORIO_RELEASES
+          if ($LASTEXITCODE) { throw 'Falha no upload; o release permanece em rascunho.' }
+          gh release edit $env:ETIQUETA --repo $env:REPOSITORIO_RELEASES --draft=false --latest
+          if ($LASTEXITCODE) { throw 'Falha ao publicar o release.' }
