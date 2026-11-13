@@ -13,6 +13,11 @@ ler; parágrafos como este ficam de fora dela.
 As versões anteriores à 0.1.4 foram reconstruídas a partir do histórico do
 repositório, porque a tela de Versões só passou a existir na 0.1.4.
 
+## 0.1.105 — 13/11/2026
+
+- **Instalador compilado pelo GitHub Actions.** A publicação inclui checksum SHA-256 e atestação de origem vinculada aos fontes e à execução do build.
+- **Atualizações no repositório público do Cururu.** O aplicativo passa a procurar novas versões nas Releases do mesmo repositório que contém o código-fonte.
+
 ## 0.1.104 — 12/11/2026
 
 - **Entrega consolidada das melhorias recentes.** Inclui conexões MongoDB, indicador de abertura, acesso à senha salva e alertas de consulta com envio ao Teams, execução imediata e logs por regra.

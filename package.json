@@ -2,7 +2,7 @@
   "name": "cururu",
   "private": true,
   "license": "SEE LICENSE IN LICENCA.md",
-  "version": "0.1.104",
+  "version": "0.1.105",
   "type": "module",
   "description": "Cliente Oracle leve",
   "scripts": {

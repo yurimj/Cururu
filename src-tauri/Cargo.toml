@@ -1,6 +1,6 @@
 [package]
 name = "cururu"
-version = "0.1.104"
+version = "0.1.105"
 description = "Cliente Oracle leve"
 authors = ["yurimj"]
 license-file = "../LICENCA.md"
