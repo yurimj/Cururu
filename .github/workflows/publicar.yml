@@ -86,7 +86,7 @@ jobs:
       - name: Compilar instalador com tauri-action
         uses: tauri-apps/tauri-action@84b9d35b5fc46c1e45415bdb6144030364f7ebc5 # v0
         with:
-          args: --config src-tauri/tauri.instalador.conf.json --locked
+          args: --config src-tauri/tauri.instalador.conf.json -- --locked
 
       - name: Conferir instalador e gerar checksum
         shell: pwsh
