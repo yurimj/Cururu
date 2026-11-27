@@ -26,8 +26,7 @@ use std::time::Instant;
 
 use windows_sys::Win32::Foundation::CloseHandle;
 use windows_sys::Win32::System::Threading::{
-    OpenProcess, QueryFullProcessImageNameW, PROCESS_NAME_WIN32,
-    PROCESS_QUERY_LIMITED_INFORMATION,
+    OpenProcess, QueryFullProcessImageNameW, PROCESS_NAME_WIN32, PROCESS_QUERY_LIMITED_INFORMATION,
 };
 use windows_sys::Win32::UI::WindowsAndMessaging::{
     FindWindowExW, GetWindowThreadProcessId, HWND_MESSAGE,
@@ -58,12 +57,13 @@ static CARREGADA: AtomicBool = AtomicBool::new(false);
 /// `identificador` é o do `tauri.conf.json`: o Tauri guarda os dados da página
 /// em `%LOCALAPPDATA%\<identificador>`, e o WebView2 acrescenta `EBWebView`.
 pub fn escolher_versao(identificador: &str) {
+    preparar_portatil();
     let padrao = tauri::webview_version().ok();
     let instalada = padrao.as_deref().unwrap_or("não encontrado");
 
     // Quem abriu o Cururu já escolheu a pasta — um runtime fixo, um teste de
     // versão. A escolha é dele.
-    if let Some(pasta) = std::env::var_os(VARIAVEL) {
+    if let Some(pasta) = std::env::var_os(VARIAVEL).filter(|_| !FIXADA.load(Ordering::SeqCst)) {
         registro::informacao(
             "webview",
             format!(
@@ -97,6 +97,45 @@ pub fn escolher_versao(identificador: &str) {
             );
         }
     }
+}
+
+/// Usa o runtime distribuído ao lado do executável, sem instalar nada.
+/// Uma escolha explícita no ambiente continua tendo prioridade.
+fn preparar_portatil() {
+    if std::env::var_os(VARIAVEL).is_some() {
+        return;
+    }
+    let Some(pasta) = std::env::current_exe()
+        .ok()
+        .and_then(|exe| exe.parent().map(|pai| pai.join("webview2")))
+        .filter(|pasta| pasta.join("msedgewebview2.exe").is_file())
+    else {
+        return;
+    };
+
+    // O Windows 10 exige leitura pelos contêineres do renderizador desde o
+    // runtime 120. A permissão precisa ser aplicada no destino, depois da cópia
+    // ou extração do ZIP; ACLs da máquina de build não viajam no arquivo.
+    use std::os::windows::process::CommandExt;
+    match std::process::Command::new("icacls.exe")
+        .arg(&pasta)
+        .args([
+            "/grant",
+            "*S-1-15-2-2:(OI)(CI)(RX)",
+            "*S-1-15-2-1:(OI)(CI)(RX)",
+        ])
+        .creation_flags(0x08000000) // CREATE_NO_WINDOW
+        .output()
+    {
+        Ok(saida) if saida.status.success() => {}
+        _ => registro::aviso(
+            "webview",
+            "não foi possível preparar as permissões do runtime portátil",
+        ),
+    }
+    std::env::set_var(VARIAVEL, &pasta);
+    FIXADA.store(true, Ordering::SeqCst);
+    registro::informacao("webview", format!("runtime portátil: {}", pasta.display()));
 }
 
 /// A primeira página terminou de carregar: a janela veio de fato.

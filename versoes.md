@@ -13,6 +13,18 @@ ler; parágrafos como este ficam de fora dela.
 As versões anteriores à 0.1.4 foram reconstruídas a partir do histórico do
 repositório, porque a tela de Versões só passou a existir na 0.1.4.
 
+## 0.1.108 — 27/11/2026
+
+- **Execução manual de alertas pausados.** O menu do botão direito permite executar uma regra mesmo desativada, incluindo o envio ao Teams quando configurado, sem retomar o agendamento automático.
+
+## 0.1.107 — 26/11/2026
+
+- **F5 sem perder as abas abertas.** O atalho atualiza o nó com foco na árvore de objetos, sem recarregar a interface inteira. No editor SQL, continua executando o script. Os atalhos nativos de recarregamento da interface também são bloqueados.
+
+## 0.1.106 — 25/11/2026
+
+- **Portátil com WebView2 próprio.** A pasta completa inclui o runtime da interface e o Instant Client: basta extrair em uma pasta local e abrir o Cururu, sem instalar o WebView2. As permissões necessárias no Windows 10 são preparadas automaticamente.
+
 ## 0.1.105 — 13/11/2026
 
 - **Instalador compilado pelo GitHub Actions.** A publicação inclui checksum SHA-256 e atestação de origem vinculada aos fontes e à execução do build.

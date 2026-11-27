@@ -39,7 +39,6 @@ export class MonitorDeAlertas {
     if (this.encerrado) return;
     const anterior = this.verificacoes.get(regra.id);
     this.remover(regra.id);
-    if (!regra.ativo) return;
     const verificacao: Verificacao = {
       regra,
       ultimoAviso: anterior?.regra.consulta === regra.consulta &&
@@ -60,7 +59,7 @@ export class MonitorDeAlertas {
     const verificacao = this.verificacoes.get(id);
     if (!verificacao || this.encerrado || verificacao.executando) return;
     window.clearTimeout(verificacao.temporizador);
-    await this.verificar(verificacao);
+    await this.verificar(verificacao, true);
   }
 
   encerrar(): void {
@@ -69,18 +68,19 @@ export class MonitorDeAlertas {
   }
 
   private agendar(verificacao: Verificacao): void {
+    if (!verificacao.regra.ativo) return;
     verificacao.temporizador = window.setTimeout(
       () => void this.verificar(verificacao), verificacao.regra.minutos * 60_000,
     );
   }
 
-  private async verificar(verificacao: Verificacao): Promise<void> {
+  private async verificar(verificacao: Verificacao, manual = false): Promise<void> {
     if (verificacao.executando) return;
     verificacao.executando = true;
     const { regra } = verificacao;
     const vigente = () => this.verificacoes.get(regra.id) === verificacao;
     try {
-      const resultado = await api.verificarAlerta(this.sessaoId, regra.id);
+      const resultado = await api.verificarAlerta(this.sessaoId, regra.id, manual);
       if (!vigente() || resultado === null) return;
       const { mensagem } = resultado;
       if (mensagem === null) {
@@ -98,7 +98,7 @@ export class MonitorDeAlertas {
       const texto = regra.contagemLegada ? t("alerta disparado", { valor: mensagem }) : mensagem;
       const nota = mostrarAlerta(regra, this.conexao, texto);
       if (regra.temTeams) {
-        const enviado = await api.notificarAlertaNoTeams(this.sessaoId, regra.id, mensagem).catch(() => false);
+        const enviado = await api.notificarAlertaNoTeams(this.sessaoId, regra.id, mensagem, manual).catch(() => false);
         if (!enviado && vigente()) nota.textContent = t("alerta teams falhou");
       }
     } catch {

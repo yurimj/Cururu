@@ -21,7 +21,9 @@ para a publicação. Dados locais e bibliotecas proprietárias não fazem parte 
 
 Baixe o instalador na página de [downloads e releases](https://github.com/yurimj/Cururu/releases),
 instale e abra o Cururu pelo atalho criado. Se recebeu a pasta portátil, mantenha
-os arquivos juntos e execute `cururu.exe`.
+os arquivos juntos (`cururu.exe`, `instantclient/` e `webview2/`), extraia para
+uma pasta local e execute `cururu.exe`. A distribuição portátil completa dispensa
+a instalação do WebView2; não execute diretamente de dentro do ZIP ou da rede.
 
 A interface faz parte do aplicativo. Para usar o Cururu, não é necessário abrir
 um endereço no navegador nem instalar Node.js ou Rust.

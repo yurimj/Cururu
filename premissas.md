@@ -61,6 +61,31 @@ Consequências:
 - A versão Basic garante mensagens de erro em todos os idiomas e o conjunto completo de charsets, eliminando riscos de acentuação e de bases com charset menos comum.
 - A redistribuição das bibliotecas é **permitida**, inclusive fora da empresa. A licença que acompanha o Instant Client Basic 19.31 é a **Oracle Free Use Terms and Conditions (FUTC)** — o arquivo `BASIC_LICENSE` dentro do pacote —, e ela autoriza redistribuir os Programas sem modificação, desde que não se cobre do usuário final uma taxa pelo uso do Instant Client. As condições que recaem sobre este projeto são três: não alterar as bibliotecas (o `sqlnet.ora` próprio é configuração ao lado delas, não modificação delas); **levar o `BASIC_LICENSE` junto** de toda distribuição; e não remover os avisos de propriedade da Oracle. O build já cumpre as três — o `BASIC_LICENSE` acompanha as `.dll` tanto na pasta portátil (`target/release/instantclient/`) quanto no instalador, onde o `resources` de `tauri.instalador.conf.json` copia a pasta inteira do Instant Client. Não é parecer jurídico, mas é o que diz o texto da própria licença embutida.
 
+### WebView2 na distribuição portátil
+
+A pasta portátil completa leva o **WebView2 Fixed Version x64** em `webview2/`,
+ao lado de `cururu.exe`. Isso permite copiar e executar sem instalação prévia do
+runtime. O Cururu prepara as permissões dos contêineres de renderização no destino,
+inclusive no Windows 10, e preserva a compatibilidade com outro Cururu já aberto.
+Sem a pasta local, continua usando o runtime instalado. Uma escolha explícita por
+`WEBVIEW2_BROWSER_EXECUTABLE_FOLDER` tem prioridade.
+
+O runtime fixo não se atualiza sozinho: novas distribuições devem atualizar sua
+versão periodicamente. Os arquivos e avisos da Microsoft acompanham o pacote sem
+modificações. A execução precisa ser em disco local, pois o runtime fixo não suporta
+compartilhamentos de rede. O espaço adicional em disco é aceitável pelo foco em RAM.
+
+Para gerar o executável sem instalador e o ZIP limpo de distribuição:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File ferramentas/preparar-portatil.ps1
+```
+
+O script baixa a versão oficial indicada nele, valida a assinatura Microsoft,
+compila com `--no-bundle` e separa os arquivos de entrega em
+`src-tauri/target/portatil/`. Nunca distribua a pasta de build inteira, que contém
+artefatos de desenvolvimento. Conexões, senhas e logs ficam fora dessa entrega.
+
 ### SQL Server: versões e forma da tela
 
 **Requisito: SQL Server 2014 em diante.**

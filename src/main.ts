@@ -369,6 +369,15 @@ function botaoDeMenu(): HTMLButtonElement {
  * primeiro e abre o "salvar página" e o "abrir arquivo" dele.
  */
 function ligarAtalhosDaJanela(): void {
+  // Recarregar a página destrói as abas em memória. Impede a ação nativa sem
+  // interromper os handlers da árvore e do editor (onde F5 executa script).
+  document.addEventListener("keydown", (evento) => {
+    if (evento.key === "F5" ||
+        ((evento.ctrlKey || evento.metaKey) && evento.key.toLowerCase() === "r" && !evento.altKey)) {
+      evento.preventDefault();
+    }
+  });
+
   document.addEventListener("keydown", (evento) => {
     if (evento.ctrlKey && !evento.altKey && !evento.shiftKey && (evento.key === "PageUp" || evento.key === "PageDown")) {
       evento.preventDefault();

@@ -97,7 +97,7 @@ Também se revisa o log:
 
 O Cururu é entregue de duas formas, que servem a momentos diferentes:
 
-1. **Pasta portátil** — o executável junto com as bibliotecas do Instant Client na mesma pasta. Copiar a pasta e executar deve bastar. É o que sai de todo build rotineiro.
+1. **Pasta portátil** — `cururu.exe` junto com as pastas `instantclient/` e `webview2/` (WebView2 Fixed Version). Copiar a pasta para um disco local e executar deve bastar, sem instalar WebView2. Para preparar a distribuição completa e o ZIP limpo, use `ferramentas/preparar-portatil.ps1`, que compila com `--no-bundle`. Nunca envie o diretório de build inteiro.
 2. **Instalador** — `Cururu_<versão>_x64-setup.exe`, gerado **somente quando o usuário pedir** e publicado no repositório de releases. Instala na pasta do usuário, sem exigir Administrador, e leva o Instant Client junto.
 
 **Proibição de gerar instalador sem pedido:** não deve ser criado, recompilado nem atualizado qualquer instalador (`setup.exe`, NSIS, MSI ou equivalente), a menos que o usuário peça **explicitamente** por um instalador. Um pedido para "gerar o executável", "gerar um novo `.exe`" ou concluir uma modificação autoriza somente o build portátil de **`src-tauri/target/release/cururu.exe`** e **não** autoriza empacotamento. O build rotineiro deve usar a opção **`--no-bundle`**:

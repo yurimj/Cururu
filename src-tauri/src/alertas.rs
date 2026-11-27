@@ -319,13 +319,14 @@ fn consulta_unica(texto: &str, tipo: TipoBanco) -> Resultado<String> {
 pub fn verificar_alerta(
     sessao_id: String,
     id: String,
+    manual: Option<bool>,
     sessoes: State<'_, Sessoes>,
     alertas: State<'_, Repositorio>,
 ) -> Resultado<Option<ResultadoDaVerificacao>> {
     let sessao = sessoes.obter(&sessao_id)?;
     let Some(item) = alertas
         .obter(&sessao.perfil.id, &id)?
-        .filter(|item| item.regra.ativo)
+        .filter(|item| item.regra.ativo || manual.unwrap_or(false))
     else {
         return Ok(None);
     };
@@ -426,6 +427,7 @@ fn consultar_oracle(
 pub fn notificar_alerta_teams(
     sessao_id: String,
     id: String,
+    manual: Option<bool>,
     mensagem: String,
     sessoes: State<'_, Sessoes>,
     alertas: State<'_, Repositorio>,
@@ -433,7 +435,7 @@ pub fn notificar_alerta_teams(
     let sessao = sessoes.obter(&sessao_id)?;
     let Some(item) = alertas
         .obter(&sessao.perfil.id, &id)?
-        .filter(|item| item.regra.ativo)
+        .filter(|item| item.regra.ativo || manual.unwrap_or(false))
     else {
         return Ok(false);
     };

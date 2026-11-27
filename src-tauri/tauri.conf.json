@@ -1,7 +1,7 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
   "productName": "Cururu",
-  "version": "0.1.105",
+  "version": "0.1.108",
   "identifier": "br.dev.cururu",
   "build": {
     "frontendDist": "../dist",

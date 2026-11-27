@@ -665,7 +665,7 @@ dependencies = [
 
 [[package]]
 name = "cururu"
-version = "0.1.105"
+version = "0.1.108"
 dependencies = [
  "flate2",
  "futures-util",

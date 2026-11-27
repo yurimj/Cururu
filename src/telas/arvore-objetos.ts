@@ -454,7 +454,6 @@ export class ArvoreDeObjetos {
           menu: (evento) => abrirMenuDeContexto(evento, [
             {
               rotulo: t("executar alerta"),
-              desabilitado: !regra.ativo,
               acao: () => { void this.monitorDeAlertas?.executar(regra.id); },
             },
             {
@@ -1441,6 +1440,12 @@ class No {
       this.linha.addEventListener("mouseleave", () => this.opcoes.aoPairar?.(false));
     }
     this.linha.addEventListener("keydown", (evento) => {
+      if (evento.key === "F5" && !evento.ctrlKey && !evento.metaKey && !evento.altKey && !evento.shiftKey) {
+        evento.preventDefault();
+        evento.stopPropagation();
+        if (!evento.repeat && !document.querySelector(".dialogo-fundo")) void this.recarregar();
+        return;
+      }
       if (evento.key === "Enter") {
         if (this.opcoes.aoAbrir) this.opcoes.aoAbrir();
         else void this.alternar();

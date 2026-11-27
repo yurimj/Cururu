@@ -201,13 +201,13 @@ export function excluirAlerta(sessaoId: string, id: string): Promise<void> {
 }
 
 export function verificarAlerta(
-  sessaoId: string, id: string,
+  sessaoId: string, id: string, manual = false,
 ): Promise<{ mensagem: string | null } | null> {
-  return invoke("verificar_alerta", { sessaoId, id });
+  return invoke("verificar_alerta", { sessaoId, id, manual });
 }
 
-export function notificarAlertaNoTeams(sessaoId: string, id: string, mensagem: string): Promise<boolean> {
-  return invoke("notificar_alerta_teams", { sessaoId, id, mensagem });
+export function notificarAlertaNoTeams(sessaoId: string, id: string, mensagem: string, manual = false): Promise<boolean> {
+  return invoke("notificar_alerta_teams", { sessaoId, id, mensagem, manual });
 }
 
 /**

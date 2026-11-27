@@ -882,7 +882,7 @@ O monitor começa quando a conexão é aberta na árvore e para ao desconectar. 
 
 O aviso sai quando o texto muda ou volta a aparecer depois de um ciclo sem mensagem. **Repetir após** permite avisar novamente com o mesmo texto na primeira verificação após o prazo. Regras de contagem gravadas em versões anteriores conservam a condição maior que 1 até que se altere a consulta.
 
-O botão direito sobre uma regra oferece **Logs**. A janela **Logs de Execução** mostra os 200 registros mais recentes daquela regra, incluindo verificações, falhas de consulta e tentativas de envio ao Teams. **Atualizar** relê o histórico local.
+O botão direito sobre uma regra oferece **Executar**, inclusive quando estiver pausada. A execução manual mantém a regra pausada, sem retomar o agendamento. Também oferece **Logs**. A janela **Logs de Execução** mostra os 200 registros mais recentes daquela regra, incluindo verificações, falhas de consulta e tentativas de envio ao Teams. **Atualizar** relê o histórico local.
 
 Cada regra pode enviar ao Teams o texto retornado, por um webhook do Power Automate. Para o chat pessoal, o fluxo usa **Postar uma mensagem para mim mesmo** na conta que receberá o aviso. A URL é protegida pelo DPAPI em disco e aparece nas propriedades para ser copiada e reutilizada. A tela avisa para não compartilhar o endereço.
 
